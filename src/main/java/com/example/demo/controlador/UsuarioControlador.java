@@ -26,16 +26,7 @@ public class UsuarioControlador {
 		return repositorio.findAll();
 	}
 	
-	@GetMapping("/BuscarUsuario")
-	public Usuario BuscarUsuario(@RequestParam Long id_usu) {
-		if(repositorio.existsById(id_usu)) {
-			return repositorio.findById(id_usu).get();
-		}
-		else {
-			 System.out.println("Usuario con ID " + id_usu + " no encontrado");
-		     return null;
-		}
-	}
+	
 	
 	@PostMapping("/GuardarUsuario")
 	public ResponseEntity<?> GuardarUsuario(@RequestBody Usuario usu) {
@@ -67,60 +58,9 @@ public class UsuarioControlador {
 		   
 		
 		 }
-	 @PostMapping("/EliminarUsuario")
-	 public String EliminarUsuario(@RequestParam Long id_usu) {
-		 if(repositorio.existsById(id_usu)) {
-			repositorio.deleteById(id_usu);
-			return "Eliminado Exitosamente";
-		 }
-		 else {
-			 return "No se encontro el usuario a eliminar";
-		 }
-		 
-	}
 	 
-	 @PostMapping("/ActualizarUsuario")
-	 public ResponseEntity<?> ActualizarUsuario(@RequestBody Usuario usuarioActualizado) {
-	     if (usuarioActualizado.getId_usuario() == null) {
-	         return ResponseEntity.badRequest().body("El campo 'id_usuario' es obligatorio para actualizar.");
-	     }
-
-	     if (!repositorio.existsById(usuarioActualizado.getId_usuario())) {
-	         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado con ID: " + usuarioActualizado.getId_usuario());
-	     }
-
-	   
-	     if (usuarioActualizado.getNombre_completo() == null || usuarioActualizado.getNombre_completo().trim().isEmpty()) {
-	         return ResponseEntity.badRequest().body("El campo 'nombre_completo' es obligatorio");
-	     }
-
-	     if (usuarioActualizado.getFecha_expedicion_licencia() == null) {
-	         return ResponseEntity.badRequest().body("El campo 'fecha_expedicion_licencia' es obligatorio");
-	     }
-
-	     if (usuarioActualizado.getCategoria_licencia() == null || usuarioActualizado.getCategoria_licencia().trim().isEmpty()) {
-	         return ResponseEntity.badRequest().body("El campo 'categoria_licencia' es obligatorio");
-	     }
-
-	     if (usuarioActualizado.getVigencia_licencia() == null) {
-	         return ResponseEntity.badRequest().body("El campo 'vigencia_licencia' es obligatorio");
-	     }
-
-	     if (usuarioActualizado.getCorreo_electronico() == null || usuarioActualizado.getCorreo_electronico().trim().isEmpty()) {
-	         return ResponseEntity.badRequest().body("El campo 'correo_electronico' es obligatorio");
-	     }
-
-	     if (usuarioActualizado.getTelefono() == null || usuarioActualizado.getTelefono().trim().isEmpty()) {
-	         return ResponseEntity.badRequest().body("El campo 'telefono' es obligatorio");
-	     }
-
-	     if (usuarioActualizado.getPassword() == null || usuarioActualizado.getPassword().trim().isEmpty()) {
-	         return ResponseEntity.badRequest().body("El campo 'password' es obligatorio");
-	     }
-
-	     Usuario usuarioGuardado = repositorio.save(usuarioActualizado);
-	     return ResponseEntity.ok(usuarioGuardado);
-	 }
+	 
+	 
 
 	
 	
