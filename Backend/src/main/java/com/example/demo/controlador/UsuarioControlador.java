@@ -1,6 +1,8 @@
 package com.example.demo.controlador;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.modelo.Usuario;
 import com.example.demo.repositorio.RepositorioUsuario;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/ver/")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class UsuarioControlador {
 	@Autowired
 	private RepositorioUsuario repositorio;
@@ -135,10 +139,10 @@ public class UsuarioControlador {
 	 }
 	 
 	 
-	 // INICIAR SESION
+	 /*INICIAR SESION
 	 @PostMapping("/iniciarSesion")
-	    public ResponseEntity<String> login(@RequestParam String identificacion, @RequestParam String contraseña) {
-	        Usuario usuario = repositorio.login(identificacion, contraseña);
+	    public ResponseEntity<String> login(@RequestParam String identificacion, @RequestParam String contra) {
+	        Usuario usuario = repositorio.login(identificacion, contra);
 
 	        if (usuario != null) {
 	            return ResponseEntity.ok("Inicio de sesión exitoso");
@@ -146,6 +150,25 @@ public class UsuarioControlador {
 	            return ResponseEntity.status(401).body("Identificación o contraseña incorrectos");
 	        }
 	    }
+	    */
+	 
+	 @PostMapping("/iniciarSesion")
+	 public ResponseEntity<String> login(@RequestBody Map<String, String> datosLogin) {
+	     String identificacion = datosLogin.get("identificacion");
+	     String password = datosLogin.get("password");
+	     
+	     
+	     System.out.println("Identificación recibida: " + identificacion);
+	     System.out.println("Password recibido: " + password);
+
+	     Usuario usuarioEncontrado = repositorio.login(identificacion, password);
+
+	     if (usuarioEncontrado != null) {
+	         return ResponseEntity.ok("Inicio de sesión exitoso");
+	     } else {
+	         return ResponseEntity.status(401).body("Usuario o contraseña incorrectos");
+	     }
+	 }
 }
 	
 
