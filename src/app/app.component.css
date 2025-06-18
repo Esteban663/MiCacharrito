@@ -1,0 +1,17 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+:host {
+    display: block;
+    min-height: 100vh;
+    /*background-image: url('/assets/imagenes/carroA.jpg');  Ruta de la imagen de fondo */
+    /** https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1500&q=80 */
+    background-size: cover;
+    background-blend-mode: multiply;
+    background-color: rgba(0, 0, 0, 0.7);
+    background-position: center;
+    background-repeat: no-repeat;
+}

@@ -1,0 +1,27 @@
+<p>Hola</p>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>fecha_expedicion_licencia</th>
+      <th>categoria_licencia</th>
+      <th>vigencia_licencia</th>
+      <th>correo_electronico</th>
+      <th>telefono</th>
+      <th>password</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of usuario">
+      <td>{{ user.identificacion }}</td>
+      <td>{{ user.nombre }}</td>
+      <td>{{ user.fecha_expedicion_licencia }}</td>
+      <td>{{ user.categoria_licencia }}</td>
+      <td>{{ user.vigencia_licencia }}</td>
+      <td>{{ user.correo_electronico }}</td>
+      <td>{{ user.telefono }}</td>
+      <td>{{ user.password }}</td>
+    </tr>
+  </tbody>
+</table>

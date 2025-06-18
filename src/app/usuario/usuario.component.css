@@ -1,0 +1,23 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #222; /* Negro claro */
+    color: #fff;
+}
+
+th, td {
+    padding: 12px 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody {
+    background-color: #f0f0f0; /* Gris claro */
+}
+
+tbody tr:nth-child(even) {
+    background-color: #e0e0e0; /* Gris un poco más oscuro para filas pares */
+}
