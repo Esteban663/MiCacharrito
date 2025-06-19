@@ -6,13 +6,13 @@ import { LoginUsuarioComponent } from './login-usuario/login-usuario.component';
 import { AdminControlComponent } from './admin-control/admin-control.component';
 import { CancelarAlquilerComponent } from "./cancelar-alquiler/cancelar-alquiler.component";
 import { PendientesEntregaComponent } from "./pendientes-entrega/pendientes-entrega.component";
+import { ListaVehiculosComponent } from "./lista-vehiculos/lista-vehiculos.component";
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-
-  imports: [RouterOutlet, NavegacionComponent, LoginUsuarioComponent, AdminControlComponent, CancelarAlquilerComponent],
-
+  imports: [RouterOutlet, NavegacionComponent, LoginUsuarioComponent, AdminControlComponent, CancelarAlquilerComponent, ListaVehiculosComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

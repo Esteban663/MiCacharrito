@@ -1,0 +1,29 @@
+
+    <h1>Vehiculos En Alquiler</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Placa</th>
+                <th>Nombre</th>
+                <th>Color</th>
+                <th>Valor Alquiler</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr *ngFor="let car of vehiculo">
+                <td>{{ car.placa }}</td>
+                <td>{{ car.tipo }}</td>
+                <td>{{ car.color }}</td>
+                <td>{{ car.valor_alquiler }}</td>
+                <td>{{ car.estado }}</td>
+                <td>
+                    <button (click)="alquilarVehiculo(car)">Alquilar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
