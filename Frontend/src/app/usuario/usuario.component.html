@@ -1,4 +1,9 @@
 <p>Hola</p>
+
+<!-- Buscador por ID -->
+<input type="text" placeholder="Buscar por ID" [(ngModel)]="searchId" />
+<button (click)="searchUsuarios()">Buscar</button>
+
 <table>
   <thead>
     <tr>
@@ -13,7 +18,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let user of usuario">
+    <tr *ngFor="let user of usuariosFiltrados">
       <td>{{ user.identificacion }}</td>
       <td>{{ user.nombre_completo }}</td>
       <td>{{ user.fecha_expedicion_licencia }}</td>

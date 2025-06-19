@@ -32,7 +32,10 @@ export class LoginUsuarioComponent {
   }
    
   mostrarFormulario = true;
+
+    // Cuando quieras ocultar el formulario, pon:
   onSubmit() {
+    console.log('submit');
     console.log(this.loginForm.value);
     if (this.loginForm.invalid) return;
 
@@ -49,6 +52,15 @@ export class LoginUsuarioComponent {
       }
     });
   }
+
+  irAUsuario() {
+  
+}
+
+irAAdministrador() {
+  this.router.navigate(['/login-admin']);
+  this.mostrarFormulario = false;
+}
 
 
 /*
