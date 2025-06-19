@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,7 @@ import com.example.demo.repositorio.RepositorioAlquiler;
 import com.example.demo.repositorio.RepositorioVehiculo;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200") 
 @RequestMapping("/ver/")
 public class AlquilerControlador {
     
@@ -101,5 +103,15 @@ public class AlquilerControlador {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Alquiler no encontrado");
         }
+    }
+    
+    @GetMapping("/AlquileresPendientesEntrega")
+    public List<Alquiler> verAlquileresPendientesEntrega() {
+        return repositorioAlquiler.findByEstado("pendiente de entrega");
+    }
+
+    @GetMapping("/AlquileresPendientesEntregaPorTipo")
+    public List<Alquiler> verAlquileresPendientesEntregaPorTipo(@RequestParam String tipoVehiculo) {
+        return repositorioAlquiler.findByEstadoAndVehiculoTipo("pendiente de entrega", tipoVehiculo);
     }
 }
