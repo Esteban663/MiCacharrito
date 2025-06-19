@@ -41,7 +41,7 @@ export class LoginUsuarioComponent {
       next: (resp) => {
         // Si el login es exitoso, redirige
         alert('Login exitoso');
-        this.router.navigate(['/usuario']);
+        this.router.navigate(['/lista-vehiculos']);
         this.mostrarFormulario = false; // Oculta el formulario después del login exitoso
       },
       error: (err) => {
