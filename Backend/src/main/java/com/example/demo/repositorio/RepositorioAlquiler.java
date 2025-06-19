@@ -27,4 +27,12 @@ public interface RepositorioAlquiler extends JpaRepository<Alquiler,Integer> {
     // Buscar alquileres por placa del vehículo
     @Query("SELECT a FROM Alquiler a WHERE a.vehiculo.placa = :placa")
     List<Alquiler> findByVehiculoPlaca(@Param("placa") String placa);
+    
+
+    // Buscar alquileres por estado y tipo de vehículo
+    @Query("SELECT a FROM Alquiler a WHERE a.estado = :estado AND a.vehiculo.tipo = :tipoVehiculo")
+    List<Alquiler> findByEstadoAndVehiculoTipo(@Param("estado") String estado, @Param("tipoVehiculo") String tipoVehiculo);
+
+    // Nota: El método findByEstado ya existe en tu código, así 
+    //que no necesitas agregarlo de nuevo
 }

@@ -1,0 +1,137 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <h2 class="mb-4">
+        <i class="fas fa-times-circle text-danger"></i>
+        Cancelar Alquiler
+      </h2>
+
+      <!-- Mensaje de notificación -->
+      <div *ngIf="mensaje" class="alert" 
+           [ngClass]="{
+             'alert-success': tipoMensaje === 'success',
+             'alert-danger': tipoMensaje === 'error',
+             'alert-info': tipoMensaje === 'info'
+           }" 
+           role="alert">
+        <i class="fas" 
+           [ngClass]="{
+             'fa-check-circle': tipoMensaje === 'success',
+             'fa-exclamation-circle': tipoMensaje === 'error',
+             'fa-info-circle': tipoMensaje === 'info'
+           }"></i>
+        {{ mensaje }}
+      </div>
+
+      <!-- Spinner de carga -->
+      <div *ngIf="cargando" class="text-center my-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p class="mt-2 text-muted">Cargando alquileres activos...</p>
+      </div>
+
+      <!-- Lista de alquileres activos -->
+      <div *ngIf="!cargando && alquileresActivos.length > 0" class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title mb-0">
+                <i class="fas fa-list"></i>
+                Alquileres Pendientes de Entrega
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead class="table-dark">
+                    <tr>
+                      <th>N° Alquiler</th>
+                      <th>Vehículo</th>
+                      <th>Placa</th>
+                      <th>Fecha Inicio</th>
+                      <th>Fecha Entrega</th>
+                      <th>Valor Total</th>
+                      <th>Estado</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let alquiler of alquileresActivos">
+                      <td>
+                        <strong>#{{ alquiler.numero_alquiler }}</strong>
+                      </td>
+                      <td>
+                        <span class="badge bg-secondary">{{ alquiler.vehiculo?.tipo }}</span>
+                        <br>
+                        <small class="text-muted">{{ alquiler.vehiculo?.color }}</small>
+                      </td>
+                      <td>
+                        <code>{{ alquiler.vehiculo?.placa }}</code>
+                      </td>
+                      <td>{{ formatearFecha(alquiler.fecha_inicio) }}</td>
+                      <td>{{ formatearFecha(alquiler.fecha_entrega) }}</td>
+                      <td>
+                        <strong class="text-success">
+                          ${{ alquiler.valor_total | number:'1.0-0' }}
+                        </strong>
+                      </td>
+                      <td>
+                        <span class="badge bg-warning text-dark">
+                          <i class="fas fa-clock"></i>
+                          {{ alquiler.estado }}
+                        </span>
+                      </td>
+                      <td>
+                        <button 
+                          class="btn btn-danger btn-sm"
+                          (click)="cancelarAlquiler(alquiler)"
+                          [disabled]="cargando">
+                          <i class="fas fa-times"></i>
+                          Cancelar
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mensaje cuando no hay alquileres -->
+      <div *ngIf="!cargando && alquileresActivos.length === 0 && !mensaje" 
+           class="text-center my-5">
+        <div class="card">
+          <div class="card-body">
+            <i class="fas fa-info-circle fa-3x text-info mb-3"></i>
+            <h4>No hay alquileres para cancelar</h4>
+            <p class="text-muted">
+              No tienes alquileres activos (pendientes de entrega) que puedas cancelar en este momento.
+            </p>
+            <a href="/mis-alquileres" class="btn btn-primary">
+              <i class="fas fa-list"></i>
+              Ver todos mis alquileres
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botones de navegación -->
+      <div class="mt-4">
+        <a href="/dashboard" class="btn btn-secondary">
+          <i class="fas fa-arrow-left"></i>
+          Volver al Dashboard
+        </a>
+        <button 
+          class="btn btn-outline-primary ms-2"
+          (click)="cargarAlquileresActivos()"
+          [disabled]="cargando">
+          <i class="fas fa-sync-alt"></i>
+          Actualizar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
