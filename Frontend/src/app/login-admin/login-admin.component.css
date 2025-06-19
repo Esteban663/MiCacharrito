@@ -1,0 +1,103 @@
+/** Estilos para el componente de login de usuario */
+/* Bajar el título */
+.titulo-micacharrito {
+  margin-top: 60px;
+  display: block;
+}
+
+/* Etiquetas de usuario y contraseña más legibles */
+.form-label {
+  color: #e0e0e0 !important;
+  font-size: 1rem;
+}
+
+/* "Regístrate aquí" negro y pequeño */
+.link-registrate {
+  color: #111 !important;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+nav button, nav a.button {
+  background-color: #555555;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  margin: 0 0.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 6px rgba(52, 152, 219, 0.15);
+  text-decoration: none;
+  font-size: 1.15rem; /* Tamaño de letra aumentado */
+}
+
+nav button:hover, nav a:hover {
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.25);
+  color: black !important;
+}
+
+a{
+  font-size: 25px; /* Tamaño de letra reducido */
+  color: #fff; /* Color del texto */
+  text-decoration: solid; /* Sin subrayado */
+}
+
+.login-btn {
+  background-color: #5dade2;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  margin-right: 32px; /* Separación del borde derecho */
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.15rem;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 6px rgba(52, 152, 219, 0.15);
+}
+
+.login-btn:hover {
+  background-color: #3498db;
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.25);
+  color: black;
+}
+
+.modal-dark .modal-content {
+  background-color: #111 !important;
+  color: #fff !important;
+  margin-top: 20%;
+  padding: 30px;
+}
+
+.modal-dark .modal-header,
+.modal-dark .modal-footer {
+  border-color: #222;
+}
+
+.modal-dark .form-label,
+.modal-dark .modal-title {
+  color: #fff !important;
+}
+
+.modal-dark .form-control {
+  background-color: #222;
+  color: #fff;
+  border-color: #444;
+}
+
+.close-red {
+  filter: invert(27%) sepia(99%) saturate(7492%) hue-rotate(357deg) brightness(97%) contrast(119%);
+}
+
+.btn-cerrar{
+  background-color: #444444; /* gris oscuro */
+  color: #fff; /* letra blanca */
+}
+
+.btn-iniciar{
+  background-color: #444444; /* gris oscuro */
+  color: #fff; /* letra blanca */
+}
