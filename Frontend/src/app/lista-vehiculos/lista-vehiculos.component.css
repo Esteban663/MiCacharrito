@@ -72,3 +72,83 @@ tbody tr:nth-child(odd) td {
 tbody tr:nth-child(even) td {
     background-color: #e0e0e0;
 }
+
+/* Modal overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(66, 66, 66, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* Modal content */
+.modal-content {
+    background: #f2f2f2cc;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(66, 66, 66, 0.3);
+    padding: 2rem 2.5rem;
+    max-width: 500px;
+    width: 100%;
+    color: #444;
+    position: relative;
+    font-size: 1.15rem;
+}
+
+/* Modal header */
+.modal-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #424242;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Modal close button */
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: #424242;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+.modal-close:hover {
+    background: #222;
+}
+
+/* Modal actions (buttons) */
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.modal-actions button {
+    background: #424242;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.modal-actions button:hover {
+    background: #222;
+}

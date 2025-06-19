@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Usuario } from '../entities/usuario';
+import { Vehiculo } from '../entities/vehiculo';
 
 export interface Alquiler {
   numero_alquiler: number;
-  usuario: any;
-  vehiculo: any;
-  fecha_inicio: string;
-  fecha_entrega: string;
+  usuario: Usuario;
+  vehiculo: Vehiculo;
+  fecha_inicio: Date;
+  fecha_entrega: Date;
   valor_total: number;
   estado: string;
 }
