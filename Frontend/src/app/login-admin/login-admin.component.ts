@@ -18,7 +18,7 @@ export class LoginAdminComponent {
   errorMsg: string = '';
 
   // Inyecta el identificador de plataforma en el constructor
-    constructor(
+  constructor(
     private fb: FormBuilder,
     private authService: LoginAdminService, // Asegúrate de que este servicio esté correctamente importado
     private router: Router
@@ -28,7 +28,7 @@ export class LoginAdminComponent {
       password: ['', Validators.required]
     });
   }
-   
+
   mostrarFormulario = true;
   onSubmit() {
     console.log(this.loginForm.value);
@@ -44,17 +44,21 @@ export class LoginAdminComponent {
       },
       error: (err) => {
         this.errorMsg = 'Usuario o contraseña incorrectos Admin';
+
+        setTimeout(() => {
+          this.errorMsg = '';
+        }, 3000);
       }
     });
   }
 
   irAUsuario() {
-  this.router.navigate(['/login-usuario']);
-  this.mostrarFormulario = false;
-}
+    this.router.navigate(['/login-usuario']);
+    this.mostrarFormulario = false;
+  }
 
-irAAdministrador() {
- 
-}
+  irAAdministrador() {
+
+  }
 
 }

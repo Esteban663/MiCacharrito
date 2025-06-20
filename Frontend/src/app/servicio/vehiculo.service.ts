@@ -20,4 +20,9 @@ export class VehiculoService {
   actualizarVehiculo(vehiculo: Vehiculo): Observable<Vehiculo> {
     return this.httpClient.post<Vehiculo>(`${this.bdURLC}`, vehiculo);
   }
+
+  private BdURA = "http://localhost:8080/ver/BuscarVehiculoPorTipo";
+  obtenerVehiculoPorTipo(tipo: string): Observable<Vehiculo[]> {
+    return this.httpClient.get<Vehiculo[]>(`${this.BdURA}/${tipo}`);
+  }
 }

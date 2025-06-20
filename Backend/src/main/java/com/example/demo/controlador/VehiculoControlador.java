@@ -74,7 +74,7 @@ public class VehiculoControlador {
 		
 	}
 	// Buscar Vehiculo por tipo y su disponibilidad
-	@PostMapping("/BuscarVehiculoPorTipo")
+	@GetMapping("/BuscarVehiculoPorTipo")
 	public ResponseEntity<?> BuscarVehiculoPorTipo(@RequestParam String tipo) {
 	    List<Map<String, Object>> vehiculos = repositorio.BuscarVehiculoPorTipo(tipo);
 
@@ -85,6 +85,22 @@ public class VehiculoControlador {
 	    return ResponseEntity.ok(vehiculos);
 	}
 	
+	// Actualizar tipo de vehiculo
+	@PostMapping("/ActualizarTipoVehiculo")
+	public ResponseEntity<?> actualizarTipoVehiculo(@RequestBody Map<String, String> body) {
+	    String placa = body.get("placa");
+	    String nuevoTipo = body.get("tipo");
+
+	    if (repositorio.existsById(placa)) {
+	        Vehiculo vehiculo = repositorio.findById(placa).get();
+	        vehiculo.setTipo(nuevoTipo);
+	        repositorio.save(vehiculo);
+	        return ResponseEntity.ok("Tipo de vehículo actualizado a: " + nuevoTipo);
+	    } else {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                             .body("No se encontró un vehículo con placa: " + placa);
+	    }
+	}
 
 
 }

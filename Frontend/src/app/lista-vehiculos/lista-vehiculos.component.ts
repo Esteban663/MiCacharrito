@@ -2,32 +2,49 @@ import { VehiculoService } from './../servicio/vehiculo.service';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Vehiculo } from '../entities/vehiculo';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-lista-vehiculos',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule ],
   templateUrl: './lista-vehiculos.component.html',
   styleUrl: './lista-vehiculos.component.css'
 })
 export class ListaVehiculosComponent {
   vehiculo: Vehiculo[];
+  vehiculosFiltrados: Vehiculo[] = []; 
+  cargando: boolean = false;
+  mensaje: string = '';
+  tipoMensaje: 'success' | 'error' | 'info' = 'info';
+  tipoVehiculoSeleccionado: string = '';
+  tiposVehiculos: string[] = ['Automovil', 'Camioneta', 'Campero', 'Microbus', 'Motocicleta'];
+
 
   ngOnInit(): void {
+    this.tiposVehiculos = this.tiposVehiculos.map(
+    tipo => tipo.charAt(0).toUpperCase() + tipo.slice(1)
+  );
     this.verVehiculos();
    
   }
   constructor(private vehiculoService: VehiculoService) {
-      this.vehiculo = [];
     }
-
-private verVehiculos() {
-  this.vehiculoService.obtenerListaVehiculos().subscribe(
-    (dato: Vehiculo[]) => {
-      this.vehiculo = dato.filter(v => v.estado === 'Disponible');
-    }
-  );
-}
+    
+    verVehiculos() {
+    this.cargando = true;
+    this.vehiculoService.obtenerListaVehiculos().subscribe(
+      (dato: Vehiculo[]) => {
+        this.vehiculo = dato.filter(v => v.estado === 'Disponible');
+        this.vehiculosFiltrados = [...this.vehiculo];
+        this.cargando = false;
+      },
+      error => {
+        this.mostrarMensaje('Error al cargar los vehículos', 'error');
+        this.cargando = false;
+      }
+    );
+  }
 
   alquilarVehiculo(car: Vehiculo) {
     car.estado = 'Alquilado';
@@ -43,7 +60,60 @@ private verVehiculos() {
       }
     });
   }
+/*
+verVehiculos() {
+  this.vehiculoService.obtenerListaVehiculos().subscribe(
+    (dato: Vehiculo[]) => {
+      this.vehiculo = dato.filter(v => v.estado === 'Disponible');
+      this.vehiculosFiltrados = [...this.vehiculo]; // Mostrar todos al inicio
 
+    }
+  );
+}
 
+  cargarVehiculosPorTipoDisponibles() {
+    this.cargando = true;
+    this.vehiculoService.obtenerVehiculoPorTipo(this.tipoVehiculoSeleccionado).subscribe({ 
+      next: (vehiculos) => {
+        this.vehiculo = vehiculos.filter(v => v.estado === 'Disponible');
+        this.cargando = false;
+        if (vehiculos.length === 0) {
+          this.mostrarMensaje('No hay vehículos disponibles de este tipo', 'info');
+        }
+      },
+      error: (error) => {
+        console.error('Error al cargar vehículos por tipo:', error);
+        this.mostrarMensaje('Error al cargar los vehículos por tipo', 'error');
+        this.cargando = false;
+      }
+    });
 
 }
+    */
+    
+ filtarPorTipo(): void {
+    if (!this.tipoVehiculoSeleccionado) {
+      this.vehiculosFiltrados = [...this.vehiculo];
+      return;
+    }
+    this.vehiculosFiltrados = this.vehiculo.filter(
+      v => v.tipo === this.tipoVehiculoSeleccionado
+    );
+    if (this.vehiculosFiltrados.length === 0) {
+      this.mostrarMensaje(`No hay vehículos disponibles de tipo ${this.tipoVehiculoSeleccionado}`, 'info');
+    }
+  }
+
+  limpiarFiltro(): void {
+    this.tipoVehiculoSeleccionado = '';
+    this.vehiculosFiltrados = [...this.vehiculo];
+  }
+
+  mostrarMensaje(mensaje: string, tipo: 'success' | 'error' | 'info'): void {
+    this.mensaje = mensaje;
+    this.tipoMensaje = tipo;
+
+    }
+}
+
+
