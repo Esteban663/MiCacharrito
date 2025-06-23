@@ -38,14 +38,16 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    
                     <h6>Información del Vehículo</h6>
                     <ul>
-                        <li><strong>Placa:</strong> {{ vehiculoSeleccionado?.placa }}</li>
-                        <li><strong>Tipo:</strong> {{ vehiculoSeleccionado?.tipo }}</li>
-                        <li><strong>Color:</strong> {{ vehiculoSeleccionado?.color }}</li>
-                        <li><strong>Valor Alquiler:</strong> {{ vehiculoSeleccionado?.valor_alquiler }}</li>
-                        <li><strong>Estado:</strong> {{ vehiculoSeleccionado?.estado }}</li>
-                    </ul>
+                        <li><strong>Placa:</strong> {{ vehiculoSeleccionado.placa }}</li>
+                        <li><strong>Tipo:</strong> {{ vehiculoSeleccionado.tipo }}</li>
+                        <li><strong>Color:</strong> {{ vehiculoSeleccionado.color }}</li>
+                        <li><strong>Valor Alquiler:</strong> {{ vehiculoSeleccionado.valor_alquiler }}</li>
+                        <li><strong>Estado:</strong> {{ vehiculoSeleccionado.estado }}</li>
+                        <li><strong>Id Usuario:</strong> {{ identificacionGuardada }}</li>
+                    </ul>      
                     <form #alquilerForm="ngForm" (ngSubmit)="alquilarVehiculo(vehiculoSeleccionado, alquiler)">
                         <label>
                             Fecha Inicio:
@@ -57,10 +59,13 @@
                             <input type="date" [(ngModel)]="alquiler.fecha_entrega" name="fechaFin" required>
                         </label>
                         <br>
+                        
+                        <br>
                         <label>
-                            ID de Usuario:
-                            <input type="text" [(ngModel)]="alquiler.usuario.identificacion" name="usuarioId" required>
+                            Número de Alquiler:
+                            <input type="number" [(ngModel)]="alquiler.numero_alquiler" name="numeroAlquiler" required>
                         </label>
+                        <br>
                     </form>
                 </div>
                 <div class="modal-footer">

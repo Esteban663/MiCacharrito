@@ -45,7 +45,10 @@ export class LoginUsuarioComponent {
         // Si el login es exitoso, redirige
         alert('Login exitoso');
         this.router.navigate(['/lista-vehiculos']);
-        this.mostrarFormulario = false; // Oculta el formulario después del login exitoso
+        this.mostrarFormulario = false;
+        
+
+         // Oculta el formulario después del login exitoso
       },
       error: (err) => {
         this.errorMsg = 'Usuario o contraseña incorrectos';
@@ -60,6 +63,18 @@ export class LoginUsuarioComponent {
 irAAdministrador() {
   this.router.navigate(['/login-admin']);
   this.mostrarFormulario = false;
+}
+
+irRegistroUsuario() {
+  this.router.navigate(['/registro-usuario']);
+  this.mostrarFormulario = false;
+}
+
+guardarIdentificacion() {
+  const identificacion = this.loginForm.get('identificacion')?.value;
+  if (identificacion) {
+    localStorage.setItem('identificacionUsuario', identificacion);
+  }
 }
 
 

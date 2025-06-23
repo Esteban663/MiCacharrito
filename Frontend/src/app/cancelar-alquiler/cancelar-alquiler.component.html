@@ -69,8 +69,8 @@
                       <td>
                         <code>{{ alquiler.vehiculo?.placa }}</code>
                       </td>
-                      <td>{{ formatearFecha(alquiler.fecha_inicio) }}</td>
-                      <td>{{ formatearFecha(alquiler.fecha_entrega) }}</td>
+                      <td>{{ alquiler.fecha_inicio ? formatearFecha(alquiler.fecha_inicio.toString()) : '' }}</td>
+                      <td>{{ alquiler.fecha_entrega ? formatearFecha(alquiler.fecha_entrega.toString()) : '' }}</td>
                       <td>
                         <strong class="text-success">
                           ${{ alquiler.valor_total | number:'1.0-0' }}

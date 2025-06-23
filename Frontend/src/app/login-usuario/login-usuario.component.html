@@ -1,4 +1,3 @@
-
 <!-- login-usuario.component.html -->
 <section class="vh-100" *ngIf="mostrarFormulario" style="background: #222;">
   <div class="container-fluid">
@@ -12,51 +11,28 @@
 
         <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
 
-          <form 
-            style="width: 23rem;" 
-            class="formulario-label"
-            [formGroup]="loginForm"
-            (ngSubmit)="onSubmit()"
-          >
-           <!-- Botones de selección de tipo de usuario -->
-  <div class="mb-4 d-flex justify-content-between">
-    <button 
-      type="button" 
-      class="btn btn-outline-warning me-2"
-      (click)="irAUsuario()"
-    >
-      Usuario
-    </button>
-    <button 
-      type="button" 
-      class="btn btn-outline-light me-2"
-      (click)="irAAdministrador()"
-    >
-      Administrador
-    </button>
-  </div>
+          <form style="width: 23rem;" class="formulario-label" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <!-- Botones de selección de tipo de usuario -->
+            <div class="mb-4 d-flex justify-content-between">
+              <button type="button" class="btn btn-outline-warning me-2" (click)="irAUsuario()">
+                Usuario
+              </button>
+              <button type="button" class="btn btn-outline-light me-2" (click)="irAAdministrador()">
+                Administrador
+              </button>
+            </div>
 
             <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px; color: #fff;">Iniciar Sesión</h3>
             <div class="mb-4">
               <label class="form-label" for="identificacion">Usuario</label>
-              <input 
-                type="text" 
-                id="identificacion" 
-                class="form-control" 
-                placeholder="Ingresa tu usuario" 
-                formControlName="identificacion"
-              />
+              <input type="text" id="identificacion" class="form-control" placeholder="Ingresa tu usuario"
+                formControlName="identificacion" (input)="guardarIdentificacion()" />
             </div>
 
             <div class="mb-4">
               <label class="form-label" for="password">Contraseña</label>
-              <input 
-                type="password" 
-                id="password" 
-                class="form-control" 
-                placeholder="Ingresa tu contraseña" 
-                formControlName="password"
-              />
+              <input type="password" id="password" class="form-control" placeholder="Ingresa tu contraseña"
+                formControlName="password" />
             </div>
 
             <div *ngIf="errorMsg" class="alert alert-danger">{{ errorMsg }}</div>
@@ -67,7 +43,9 @@
 
             <p>
               ¿No tienes cuenta?
-              <a href="#!" class="link-registrate">Regístrate aquí</a>
+              <button type="button" class="btn btn-outline-light me-2" (click)="irRegistroUsuario()">
+                Registrate
+              </button>
             </p>
 
           </form>
@@ -79,7 +57,7 @@
         <img src="/assets/imagenes/carroA.jpg"
           alt="Classic car parked on a street with a warm and nostalgic atmosphere, surrounded by urban buildings and soft evening light"
           class="w-100 vh-100" style="object-fit: cover; object-position: left;">
-        </div>
+      </div>
     </div>
   </div>
 </section>

@@ -24,6 +24,9 @@ export class VehiculoService {
 
   private bdURLA = "http://localhost:8080/ver/GuardarAlquiler";
   alquilarVehiculo(alquiler: Alquiler): Observable<Alquiler> {
-    return this.httpClient.post<Alquiler>(`${this.bdURLA}`, alquiler);
+    console.log('Alquiler:', alquiler);
+    var resp = this.httpClient.post<Alquiler>(`${this.bdURLA}`, alquiler);
+    console.log(resp);
+    return resp;
   }
 }
