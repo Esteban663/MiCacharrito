@@ -1,9 +1,10 @@
 
 import { Component, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { LoginUsuarioService } from '../servicio/login-usuario.service';
 import { CommonModule } from '@angular/common';
+
 
 
 
@@ -20,20 +21,20 @@ export class LoginUsuarioComponent {
   errorMsg: string = '';
 
   // Inyecta el identificador de plataforma en el constructor
-    constructor(
+  constructor(
     private fb: FormBuilder,
     private authService: LoginUsuarioService, // Asegúrate de que este servicio esté correctamente importado
-    private router: Router
+    private router: Router,
   ) {
     this.loginForm = this.fb.group({
       identificacion: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
-   
+
   mostrarFormulario = true;
 
-    // Cuando quieras ocultar el formulario, pon:
+  // Cuando quieras ocultar el formulario, pon:
   onSubmit() {
     console.log('submit');
     console.log(this.loginForm.value);
@@ -46,9 +47,12 @@ export class LoginUsuarioComponent {
         alert('Login exitoso');
         this.router.navigate(['/lista-vehiculos']);
         this.mostrarFormulario = false;
-        
 
-         // Oculta el formulario después del login exitoso
+
+        // Oculta el formulario después del login exitoso
+        this.router.navigate(['/usuario']);
+        this.mostrarFormulario = false; // Oculta el formulario después del login exitoso
+
       },
       error: (err) => {
         this.errorMsg = 'Usuario o contraseña incorrectos';
@@ -57,50 +61,51 @@ export class LoginUsuarioComponent {
   }
 
   irAUsuario() {
-  
-}
 
-irAAdministrador() {
-  this.router.navigate(['/login-admin']);
-  this.mostrarFormulario = false;
-}
-
-irRegistroUsuario() {
-  this.router.navigate(['/registro-usuario']);
-  this.mostrarFormulario = false;
-}
-
-guardarIdentificacion() {
-
-  // Guarda la identificación del usuario en el localStorage
-  const identificacion = this.loginForm.get('identificacion')?.value;
-  if (identificacion) {
-    localStorage.setItem('identificacionUsuario', identificacion);
   }
-}
+
+  irAAdministrador() {
+    this.router.navigate(['/login-admin']);
+    this.mostrarFormulario = false;
+  }
+
+  irRegistroUsuario() {
+    this.router.navigate(['/registro-usuario']);
+    this.mostrarFormulario = false;
+  }
+
+  guardarIdentificacion() {
+
+    // Guarda la identificación del usuario en el localStorage
+    const identificacion = this.loginForm.get('identificacion')?.value;
+    if (identificacion) {
+      localStorage.setItem('identificacionUsuario', identificacion);
+    }
+  }
 
 
-/*
-abrirLoginUsuario() {
+
+  /*
+  abrirLoginUsuario() {
+      const modal = document.getElementById('login');
+      if (modal !== null) {
+        modal.style.display = 'block';
+      }
+    }
+    cerrarLoginUsuario() {
     const modal = document.getElementById('login');
+    
     if (modal !== null) {
-      modal.style.display = 'block';
-    }
-  }
-  cerrarLoginUsuario() {
-  const modal = document.getElementById('login');
+      // 1. Eliminar el foco del elemento actualmente enfocado
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+      }
   
-  if (modal !== null) {
-    // 1. Eliminar el foco del elemento actualmente enfocado
-    if (document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur();
+      // 2. Ocultar el modal y marcarlo como inaccesible para lectores de pantalla
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
     }
-
-    // 2. Ocultar el modal y marcarlo como inaccesible para lectores de pantalla
-    modal.style.display = 'none';
-    modal.setAttribute('aria-hidden', 'true');
   }
-}
-
-  */
+  
+    */
 }

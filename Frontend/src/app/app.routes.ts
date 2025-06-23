@@ -17,3 +17,4 @@ export const routes: Routes = [
     { path: 'registro-usuario', component: RegistroUsuarioComponent },
     { path: 'login-usuario', component: LoginUsuarioComponent } // <-- Agrega esta línea
 ];
+

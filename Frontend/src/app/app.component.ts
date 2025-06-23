@@ -9,6 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { AdminControlComponent } from './admin-control/admin-control.component';
 import { CancelarAlquilerComponent } from './cancelar-alquiler/cancelar-alquiler.component';
 import { RegistroUsuarioComponent } from "./registro-usuario/registro-usuario.component";
+import { PendientesEntregaComponent } from "./pendientes-entrega/pendientes-entrega.component";
+import { ConsultarVehiculoAdminComponent } from "./consultar-vehiculo-admin/consultar-vehiculo-admin.component";
 
 @Component({
   selector: 'app-root',
