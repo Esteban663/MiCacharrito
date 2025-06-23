@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 
 
 
+
 @Component({
   selector: 'app-login-usuario',
   standalone: true,
@@ -23,7 +24,7 @@ export class LoginUsuarioComponent {
     constructor(
     private fb: FormBuilder,
     private authService: LoginUsuarioService, // Asegúrate de que este servicio esté correctamente importado
-    private router: Router
+    private router: Router,
   ) {
     this.loginForm = this.fb.group({
       identificacion: ['', Validators.required],
@@ -43,6 +44,7 @@ export class LoginUsuarioComponent {
         alert('Login exitoso');
         this.router.navigate(['/usuario']);
         this.mostrarFormulario = false; // Oculta el formulario después del login exitoso
+
       },
       error: (err) => {
         this.errorMsg = 'Usuario o contraseña incorrectos';

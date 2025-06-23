@@ -3,10 +3,12 @@ import { Routes } from '@angular/router';
 import { LoginUsuarioComponent } from './login-usuario/login-usuario.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { PendientesEntregaComponent } from './pendientes-entrega/pendientes-entrega.component';
+import { ConsultarVehiculoAdminComponent } from './consultar-vehiculo-admin/consultar-vehiculo-admin.component';
 
 export const routes: Routes = [
     {path: 'login-usuario', component: LoginUsuarioComponent},
     {path: 'usuario', component: UsuarioComponent},
-    {path: 'pendientes-entrega',component: PendientesEntregaComponent
-}
+    {path: 'pendientes-entrega',component: PendientesEntregaComponent},
+    { path: 'admin/consultar-vehiculos', component: ConsultarVehiculoAdminComponent }
+
 ];

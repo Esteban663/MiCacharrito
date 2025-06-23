@@ -5,11 +5,12 @@ import { NavegacionComponent } from './navegacion/navegacion.component';
 import { LoginUsuarioComponent } from './login-usuario/login-usuario.component';
 import { CancelarAlquilerComponent } from "./cancelar-alquiler/cancelar-alquiler.component";
 import { PendientesEntregaComponent } from "./pendientes-entrega/pendientes-entrega.component";
+import { ConsultarVehiculoAdminComponent } from "./consultar-vehiculo-admin/consultar-vehiculo-admin.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavegacionComponent, LoginUsuarioComponent, CancelarAlquilerComponent, PendientesEntregaComponent],
+  imports: [RouterOutlet, NavegacionComponent, LoginUsuarioComponent, CancelarAlquilerComponent, PendientesEntregaComponent, ConsultarVehiculoAdminComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

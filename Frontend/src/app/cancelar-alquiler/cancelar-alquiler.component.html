@@ -6,6 +6,41 @@
         Cancelar Alquiler
       </h2>
 
+      <!-- Formulario de búsqueda por identificación -->
+      <div *ngIf="mostrarFormularioBusqueda" class="card mb-4">
+        <div class="card-header">
+          <h5 class="card-title mb-0">
+            <i class="fas fa-search"></i>
+            Buscar mis alquileres
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="mb-3">
+                <label for="identificacion" class="form-label">Número de Identificación</label>
+                <input 
+                  type="text" 
+                  id="identificacion"
+                  class="form-control" 
+                  [(ngModel)]="usuarioIdentificacion"
+                  placeholder="Ingresa tu número de identificación"
+                  (keyup.enter)="buscarAlquileresPorId()">
+              </div>
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+              <button 
+                class="btn btn-primary w-100"
+                (click)="buscarAlquileresPorId()"
+                [disabled]="!usuarioIdentificacion.trim()">
+                <i class="fas fa-search"></i>
+                Buscar Alquileres
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Mensaje de notificación -->
       <div *ngIf="mensaje" class="alert" 
            [ngClass]="{
@@ -35,11 +70,17 @@
       <div *ngIf="!cargando && alquileresActivos.length > 0" class="row">
         <div class="col-12">
           <div class="card">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
               <h5 class="card-title mb-0">
                 <i class="fas fa-list"></i>
                 Alquileres Pendientes de Entrega
               </h5>
+              <button 
+                class="btn btn-outline-secondary btn-sm"
+                (click)="nuevaBusqueda()">
+                <i class="fas fa-search"></i>
+                Nueva Búsqueda
+              </button>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -51,6 +92,7 @@
                       <th>Placa</th>
                       <th>Fecha Inicio</th>
                       <th>Fecha Entrega</th>
+                      <th>Días Restantes</th>
                       <th>Valor Total</th>
                       <th>Estado</th>
                       <th>Acciones</th>
@@ -59,21 +101,44 @@
                   <tbody>
                     <tr *ngFor="let alquiler of alquileresActivos">
                       <td>
-                        <strong>#{{ alquiler.numero_alquiler }}</strong>
+                        <strong class="text-primary">#{{ alquiler.numero_alquiler }}</strong>
                       </td>
                       <td>
-                        <span class="badge bg-secondary">{{ alquiler.vehiculo?.tipo }}</span>
-                        <br>
-                        <small class="text-muted">{{ alquiler.vehiculo?.color }}</small>
+                        <div>
+                          <span class="badge bg-secondary">{{ alquiler.vehiculo?.tipo }}</span>
+                          <br>
+                          <small class="text-muted">
+                            <i class="fas fa-palette"></i>
+                            {{ alquiler.vehiculo?.color }}
+                          </small>
+                        </div>
                       </td>
                       <td>
-                        <code>{{ alquiler.vehiculo?.placa }}</code>
+                        <code class="bg-light text-dark p-1 rounded">
+                          {{ alquiler.vehiculo?.placa }}
+                        </code>
                       </td>
-                      <td>{{ formatearFecha(alquiler.fecha_inicio) }}</td>
-                      <td>{{ formatearFecha(alquiler.fecha_entrega) }}</td>
+                      <td>
+                        <small>
+                          <i class="fas fa-calendar-alt"></i>
+                          {{ formatearFecha(alquiler.fecha_inicio) }}
+                        </small>
+                      </td>
+                      <td>
+                        <small>
+                          <i class="fas fa-calendar-check"></i>
+                          {{ formatearFecha(alquiler.fecha_entrega) }}
+                        </small>
+                      </td>
+                      <td>
+                        <span class="badge" [ngClass]="obtenerColorEstado(alquiler.fecha_entrega)">
+                          {{ calcularDiasRestantes(alquiler.fecha_entrega) }} días
+                        </span>
+                      </td>
                       <td>
                         <strong class="text-success">
-                          ${{ alquiler.valor_total | number:'1.0-0' }}
+                          <i class="fas fa-dollar-sign"></i>
+                          {{ alquiler.valor_total | number:'1.0-0' }}
                         </strong>
                       </td>
                       <td>
@@ -86,7 +151,8 @@
                         <button 
                           class="btn btn-danger btn-sm"
                           (click)="cancelarAlquiler(alquiler)"
-                          [disabled]="cargando">
+                          [disabled]="cargando || alquiler.estado !== 'pendiente de entrega'"
+                          title="Cancelar alquiler">
                           <i class="fas fa-times"></i>
                           Cancelar
                         </button>
@@ -101,7 +167,7 @@
       </div>
 
       <!-- Mensaje cuando no hay alquileres -->
-      <div *ngIf="!cargando && alquileresActivos.length === 0 && !mensaje" 
+      <div *ngIf="!cargando && !mostrarFormularioBusqueda && alquileresActivos.length === 0 && !mensaje" 
            class="text-center my-5">
         <div class="card">
           <div class="card-body">
@@ -110,26 +176,40 @@
             <p class="text-muted">
               No tienes alquileres activos (pendientes de entrega) que puedas cancelar en este momento.
             </p>
-            <a href="/mis-alquileres" class="btn btn-primary">
-              <i class="fas fa-list"></i>
-              Ver todos mis alquileres
-            </a>
+            <div class="mt-3">
+              <button 
+                class="btn btn-primary me-2"
+                (click)="nuevaBusqueda()">
+                <i class="fas fa-search"></i>
+                Buscar Otros Alquileres
+              </button>
+              <a href="/mis-alquileres" class="btn btn-outline-primary">
+                <i class="fas fa-list"></i>
+                Ver todos mis alquileres
+              </a>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Botones de navegación -->
-      <div class="mt-4">
-        <a href="/dashboard" class="btn btn-secondary">
+      <div class="mt-4" *ngIf="!mostrarFormularioBusqueda">
+        <a href="/dashboard" class="btn btn-secondary me-2">
           <i class="fas fa-arrow-left"></i>
           Volver al Dashboard
         </a>
         <button 
-          class="btn btn-outline-primary ms-2"
+          class="btn btn-outline-primary me-2"
           (click)="cargarAlquileresActivos()"
           [disabled]="cargando">
           <i class="fas fa-sync-alt"></i>
           Actualizar
+        </button>
+        <button 
+          class="btn btn-outline-secondary"
+          (click)="nuevaBusqueda()">
+          <i class="fas fa-search"></i>
+          Nueva Búsqueda
         </button>
       </div>
     </div>
