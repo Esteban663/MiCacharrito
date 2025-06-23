@@ -71,6 +71,8 @@ irRegistroUsuario() {
 }
 
 guardarIdentificacion() {
+
+  // Guarda la identificación del usuario en el localStorage
   const identificacion = this.loginForm.get('identificacion')?.value;
   if (identificacion) {
     localStorage.setItem('identificacionUsuario', identificacion);
