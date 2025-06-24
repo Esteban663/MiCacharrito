@@ -113,23 +113,25 @@
                           {{ alquiler.vehiculo?.placa }}
                         </code>
                       </td>
-                      <td>
+                         <td>
                         <small>
                           <i class="fas fa-calendar-alt"></i>
-                          {{ formatearFecha(alquiler.fecha_inicio) }}
+                          {{ formatearFecha(alquiler.fecha_inicio ? alquiler.fecha_inicio.toString() : '') }}
                         </small>
                       </td>
-                      <td>
+                       <td>
                         <small>
                           <i class="fas fa-calendar-check"></i>
-                          {{ formatearFecha(alquiler.fecha_entrega) }}
+                          {{ formatearFecha(alquiler.fecha_entrega ? alquiler.fecha_entrega.toString() : '') }}
                         </small>
                       </td>
-                      <td>
-                        <span class="badge" [ngClass]="obtenerColorEstado(alquiler.fecha_entrega)">
-                          {{ calcularDiasRestantes(alquiler.fecha_entrega) }} días
+                     <td>
+                        <span class="badge" [ngClass]="obtenerColorEstado(alquiler.fecha_entrega ? alquiler.fecha_entrega.toString() : '')">
+                          {{ calcularDiasRestantes((alquiler.fecha_entrega ? alquiler.fecha_entrega.toString() : '')) }} días
                         </span>
                       </td>
+                      <td>{{ alquiler.fecha_inicio ? formatearFecha(alquiler.fecha_inicio.toString()) : '' }}</td>
+                      <td>{{ alquiler.fecha_entrega ? formatearFecha(alquiler.fecha_entrega.toString()) : '' }}</td>
                       <td>
                         <strong class="text-success">
                           <i class="fas fa-dollar-sign"></i>

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { AuthService, UsuarioAutenticado } from './auth.service';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -36,13 +37,10 @@ export class LoginUsuarioService {
     );
   }
 
+
   // Método para obtener los datos completos del usuario
   private obtenerDatosUsuario(identificacion: string): Observable<UsuarioAutenticado> {
     return this.httpClient.get<UsuarioAutenticado>(`${this.apiUrl}/BuscarUsuario?id_usu=${identificacion}`);
   }
 
-  // Método para cerrar sesión
-  logout(): void {
-    this.authService.cerrarSesion();
-  }
 }

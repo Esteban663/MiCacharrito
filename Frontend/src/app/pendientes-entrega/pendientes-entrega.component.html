@@ -121,8 +121,8 @@
                       <td>
                         <span class="text-muted">{{ alquiler.vehiculo?.color | titlecase }}</span>
                       </td>
-                      <td>{{ formatearFecha(alquiler.fecha_inicio) }}</td>
-                      <td>{{ formatearFecha(alquiler.fecha_entrega) }}</td>
+                      <td>{{ formatearFecha((alquiler.fecha_inicio ? alquiler.fecha_inicio.toString() : '')) }}</td>
+                      <td>{{ formatearFecha(alquiler.fecha_entrega ? alquiler.fecha_entrega.toString() : '') }}</td>
                       <td>
                         <strong class="text-success">
                           ${{ alquiler.valor_total | number:'1.0-0' }}

@@ -53,12 +53,22 @@ export class LoginUsuarioComponent {
     // Llama al servicio de autenticación para hacer login
     this.authService.login(identificacion, password).subscribe({
       next: (resp) => {
+
         this.loginExitoso = true;
         setTimeout(() => {
           this.loginExitoso = false;
           this.router.navigate(['/lista-vehiculos']);
           this.mostrarFormulario = false;
         }, 1500); // Muestra el mensaje 1.5 segundos antes de redirigir
+
+        // Si el login es exitoso, redirige
+        alert('Login exitoso');
+        this.router.navigate(['/lista-vehiculos']);
+        this.mostrarFormulario = false;
+        
+
+         // Oculta el formulario después del login exitoso
+
       },
       
       error: (err) => {
@@ -80,6 +90,20 @@ irAAdministrador() {
   this.mostrarFormulario = false;
 }
 
+
 irAUsuario() {
+
+}
+
+irRegistroUsuario() {
+  this.router.navigate(['/registro-usuario']);
+  this.mostrarFormulario = false;
+}
+
+guardarIdentificacion() {
+  const identificacion = this.loginForm.get('identificacion')?.value;
+  if (identificacion) {
+    localStorage.setItem('identificacionUsuario', identificacion);
+  }
 }
 }

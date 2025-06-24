@@ -18,4 +18,10 @@ export class UsuarioService {
     return this.httpClient.get<Usuario[]>(`${this.bdURL}`);
   }
 
+
+  private bdURLR = "http://localhost:8080/ver/GuardarUsuario";
+  registrarUsuario(usuario: Usuario): Observable<Usuario> {
+    return this.httpClient.post<Usuario>(`${this.bdURLR}`, usuario);
+  }
+
 }

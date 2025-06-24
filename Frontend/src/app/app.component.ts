@@ -7,15 +7,16 @@ import { AdminControlComponent } from './admin-control/admin-control.component';
 import { CancelarAlquilerComponent } from "./cancelar-alquiler/cancelar-alquiler.component";
 import { PendientesEntregaComponent } from "./pendientes-entrega/pendientes-entrega.component";
 import { ConsultarVehiculoAdminComponent } from "./consultar-vehiculo-admin/consultar-vehiculo-admin.component";
+import { ListaVehiculosComponent } from "./lista-vehiculos/lista-vehiculos.component";
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; 
+import { RegistroUsuarioComponent } from "./registro-usuario/registro-usuario.component";
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-
   imports: [RouterOutlet, LoginUsuarioComponent,AdminControlComponent, CancelarAlquilerComponent, PendientesEntregaComponent, ConsultarVehiculoAdminComponent],
-
-
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
