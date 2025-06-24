@@ -94,6 +94,7 @@
                       <th>Fecha Entrega</th>
                       <th>Valor Total</th>
                       <th>Estado</th>
+                      <th>Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -129,6 +130,14 @@
                           {{ alquiler.estado }}
                         </span>
                       </td>
+                      <td>
+                        <button 
+                          class="btn btn-success btn-sm"
+                          (click)="entregarVehiculo(alquiler)">
+                          <i class="fas fa-check"></i>
+                          Entregar
+                        </button>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -160,16 +169,7 @@
     </div>
   </div>
 
-  <!-- Entregar Vehículo al Usuario -->
-  <div class="card bg-danger text-white mb-3">
-    <div class="card-header fw-bold">Entregar Vehículo al Usuario</div>
-    <div class="card-body bg-dark">
-      <div class="input-group">
-        <input type="text" class="form-control bg-dark text-white border-danger" placeholder="Ingrese placa del vehículo">
-        <button class="btn btn-danger">Entregar</button>
-      </div>
-    </div>
-  </div>
+  
 
 <!-- Recibir Vehiculo -->
 <div class="card bg-danger text-white mb-3">

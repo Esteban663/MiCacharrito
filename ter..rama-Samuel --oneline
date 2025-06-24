@@ -1,0 +1,54 @@
+* [33m50b2d39[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m Arreglo de algunos fallos de conexion
+*   [33m0e0e436[m Arreglo de conflictos resueltos
+[32m|[m[33m\[m  
+* [33m|[m [33m077f701[m Marge rama Esteban y Mateo, con todas las tareas correspondientes
+* [33m|[m   [33mebfbd37[m Hice merge con las ramas Esteban y Mateo
+[34m|[m[35m\[m [33m\[m  
+[34m|[m * [33m\[m   [33mb375e7a[m[33m ([m[1;31morigin/rama-Mateo[m[33m, [m[1;32mrama-Mateo[m[33m)[m Conflictos arreglados y tarea de cancelar alquiler modificada
+[34m|[m [36m|[m[1;31m\[m [33m\[m  
+[34m|[m * [1;31m|[m [33m|[m [33meb9c255[m Cambios en html consultar vehiculo admin
+* [1;31m|[m [1;31m|[m [33m|[m [33m6be15f2[m[33m ([m[1;31morigin/rama-Esteban[m[33m, [m[1;32mrama-Esteban[m[33m)[m Hice algunos cambios en el diseño de los botes, ademas agregue btn para volver al iniciar sesion
+* [1;31m|[m [1;31m|[m [33m|[m [33mcf864c2[m Agrege un mensaje de iniciar sesion
+[1;31m|[m [1;31m|[m [1;31m|[m [33m|[m *   [33m4724217[m[33m ([m[1;31morigin/rama-Samuel[m[33m)[m Generar PDF completo, entregar vehiculo completo(cambia el estado del alquiler a entregado)
+[1;31m|[m [1;31m|[m [1;31m|[m [33m|[m [1;32m|[m[1;31m\[m  
+[1;31m|[m [1;31m|[m[1;31m_[m[1;31m|[m[1;31m_[m[33m|[m[1;31m_[m[1;32m|[m[1;31m/[m  
+[1;31m|[m[1;31m/[m[1;31m|[m [1;31m|[m [33m|[m [1;32m|[m   
+* [1;31m|[m [1;31m|[m [33m|[m [1;32m|[m [33m3635377[m Implementar búsqueda y actualización de vehículos, agregar filtros en el panel de control y mejorar la gestión de alquileres pendientes
+[1;31m|[m [1;31m|[m[1;31m/[m [33m/[m [1;32m/[m  
+[1;31m|[m[1;31m/[m[1;31m|[m [33m|[m [1;32m|[m   
+[1;31m|[m [1;31m|[m [33m|[m *   [33m2e1f5c4[m commit para hacer pull de la master(conflictos del pull rama-Mateo resueltos)
+[1;31m|[m [1;31m|[m [33m|[m [1;34m|[m[1;31m\[m  
+[1;31m|[m [1;31m|[m [33m|[m[1;31m_[m[1;34m|[m[1;31m/[m  
+[1;31m|[m [1;31m|[m[1;31m/[m[33m|[m [1;34m|[m   
+[1;31m|[m * [33m|[m [1;34m|[m [33m64f0f45[m Desarrollo de las tareas: consultar vehiculos por tipo(administrador) y cancelar alquiler(usuario)
+[1;31m|[m [1;35m|[m [33m|[m * [33mf144210[m commit antes de hacer pull de la rama-Mateo
+[1;31m|[m [1;35m|[m [33m|[m[33m/[m  
+[1;31m|[m [1;35m|[m * [33md6d6eaa[m[33m ([m[1;32mrama-Samuel[m[33m)[m Registro usuario completo frontend y backend, correcciones registro alquiler(arrastra usuario del login), falta generar pdf
+[1;31m|[m [1;35m|[m *   [33m09be814[m Conflictos resueltos al hacer pull master
+[1;31m|[m [1;35m|[m [1;36m|[m[1;31m\[m  
+[1;31m|[m [1;35m|[m[1;31m_[m[1;36m|[m[1;31m/[m  
+[1;31m|[m[1;31m/[m[1;35m|[m [1;36m|[m   
+* [1;35m|[m [1;36m|[m   [33m76e5cd7[m Resueltos conflictos al hacer merge de rama-Samuel
+[32m|[m[33m\[m [1;35m\[m [1;36m\[m  
+* [33m\[m [1;35m\[m [1;36m\[m   [33m68c4d54[m Conflictos resueltos al hacer merge de rama-Mateo
+[34m|[m[1;35m\[m [33m\[m [1;35m\[m [1;36m\[m  
+[34m|[m [1;35m|[m [33m|[m[1;35m/[m [1;36m/[m  
+[34m|[m [1;35m|[m[1;35m/[m[33m|[m [1;36m|[m   
+* [1;35m|[m [33m|[m [1;36m|[m [33m425cdb0[m Cambios ControladorAdministrador y VehiculoControlador, agrego login-admin
+[35m|[m [1;35m|[m [33m|[m * [33m10b1595[m Registro alquiler completo frontend y backend(pendiente generar pdf)
+[35m|[m [1;35m|[m [33m|[m * [33m66165b9[m Merge branch 'rama-Mateo' of https://github.com/Esteban663/miCacharrito into rama-Samuel
+[35m|[m [1;35m|[m [33m|[m[33m/[m[1;35m|[m 
+[35m|[m [1;35m|[m [33m|[m[1;35m/[m  
+[35m|[m [1;35m|[m[1;35m/[m[33m|[m   
+[35m|[m * [33m|[m [33m215dd96[m He realizado en alquiler-controlador los alquileres pendientes por entregar y en frontend agregue la clase pendientes-entrega y su el servicio de alquiler que obtiene los alquileres pendiente
+[35m|[m[35m/[m [33m/[m  
+* [33m|[m [33mc9d8689[m primer commit: configuracion de backend para controlador y repositorio de alquiler con el fin de poder cancelar alquiler
+[1;31m|[m * [33mfa20744[m Actualizar estado vehiculo en backend y ver listado de vehiculos disponibles, boton para alquilar(solo actualiza el estado del vehiculo y lo elimina de la lista de disponibles)
+[1;31m|[m[1;31m/[m  
+* [33m2fba1fc[m Carpeta Fronted
+*   [33ma6bc2eb[m Merge branch 'master' of https://github.com/Esteban663/miCacharrito
+[1;32m|[m[1;33m\[m  
+[1;32m|[m * [33m5c82e40[m Mover todo el backend a la carpeta Backend/
+[1;32m|[m * [33mb2ecb5c[m Primer Commit Backend
+* [33m0385126[m cambios antes de cambiar de rama
+* [33mf97be33[m initial commit

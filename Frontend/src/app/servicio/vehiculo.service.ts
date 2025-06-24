@@ -22,7 +22,6 @@ export class VehiculoService {
     return this.httpClient.post<Vehiculo>(`${this.bdURLC}`, vehiculo);
   }
 
-
   private BdURA = "http://localhost:8080/ver/BuscarVehiculoPorTipo";
   obtenerVehiculoPorTipo(tipo: string): Observable<Vehiculo[]> {
     return this.httpClient.get<Vehiculo[]>(`${this.BdURA}/${tipo}`);
@@ -34,6 +33,6 @@ export class VehiculoService {
     var resp = this.httpClient.post<Alquiler>(`${this.bdURLA}`, alquiler);
     console.log(resp);
     return resp;
-  }
 
+  }
 }

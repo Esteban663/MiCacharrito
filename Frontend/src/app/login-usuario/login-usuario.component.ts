@@ -1,7 +1,7 @@
 
 import { Component, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { LoginUsuarioService } from '../servicio/login-usuario.service';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../servicio/auth.service';
@@ -24,7 +24,7 @@ export class LoginUsuarioComponent {
 
 
   // Inyecta el identificador de plataforma en el constructor
-    constructor(
+  constructor(
     private fb: FormBuilder,
     private authService: LoginUsuarioService, 
     private authStateService: AuthService,
@@ -35,9 +35,11 @@ export class LoginUsuarioComponent {
       password: ['', Validators.required]
     });
   }
-   
 
-    // Cuando quieras ocultar el formulario, pon:
+  mostrarFormulario = true;
+
+
+  // Cuando quieras ocultar el formulario, pon:
   onSubmit() {
     console.log('submit');
     console.log(this.loginForm.value);
@@ -60,7 +62,6 @@ export class LoginUsuarioComponent {
           this.router.navigate(['/lista-vehiculos']);
           this.mostrarFormulario = false;
         }, 1500); // Muestra el mensaje 1.5 segundos antes de redirigir
-
       },
       
       error: (err) => {
@@ -75,6 +76,7 @@ export class LoginUsuarioComponent {
       }
     });
   }
+
 
 
 irAAdministrador() {

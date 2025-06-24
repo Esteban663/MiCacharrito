@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Alquiler } from '../entities/alquiler'; // Adjust the path if your Alquiler class is elsewhere
 import { Usuario } from '../entities/usuario';
+import { generarPDFDeAlquiler } from '../lib/pdf'; 
+
 
 
 @Component({
@@ -20,6 +22,9 @@ export class ListaVehiculosComponent {
   identificacionGuardada = localStorage.getItem('identificacionUsuario');
 
   vehiculo: Vehiculo[];
+  vehiculoSeleccionado: Vehiculo;
+  mostrarModal: boolean;
+  localStorage: Storage;
 
   vehiculosFiltrados: Vehiculo[] = []; 
   cargando: boolean = false;
@@ -27,9 +32,6 @@ export class ListaVehiculosComponent {
   tipoMensaje: 'success' | 'error' | 'info' = 'info';
   tipoVehiculoSeleccionado: string = '';
   tiposVehiculos: string[] = ['Automovil', 'Camioneta', 'Campero', 'Microbus', 'Motocicleta'];
-  vehiculoSeleccionado: Vehiculo;
-  mostrarModal: boolean;
-  localStorage: Storage;
 
 
   ngOnInit(): void {
@@ -131,6 +133,12 @@ export class ListaVehiculosComponent {
   seleccionarVehiculo(vehiculo: Vehiculo) {
     this.vehiculoSeleccionado = vehiculo;
     this.abrirModal();
+  }
+
+  onGeneratePDF(alquiler: Alquiler): void {
+    const fecha = new Date();
+    generarPDFDeAlquiler(alquiler, fecha);
+    this.mostrarMensaje('PDF generado exitosamente', 'success');
   }
     
  filtarPorTipo(): void {

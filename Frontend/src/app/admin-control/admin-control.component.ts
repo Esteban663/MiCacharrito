@@ -5,7 +5,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Vehiculo } from '../entities/vehiculo';
 import { Router } from '@angular/router';
-
+import { VehiculoService } from '../servicio/vehiculo.service';
+ 
 @Component({
   selector: 'app-admin-control',
   standalone: true,
@@ -34,30 +35,30 @@ export class AdminControlComponent {
  
 
 
-  constructor(private adminService: AdminService, private router: Router) { }
+  constructor(private adminService: AdminService, private router: Router, private vehiculoService: VehiculoService,) { }
 
   ngOnInit(): void {
     this.cargarAlquileresPendientes();
   }
-
+  
   cargarAlquileresPendientes(): void {
-    this.cargando = true;
-    this.adminService.obtenerAlquileresPendientesEntrega()
-      .subscribe({
-        next: (alquileres) => {
-          this.alquileresPendientes = alquileres;
-          this.cargando = false;
-          if (alquileres.length === 0) {
-            this.mostrarMensaje('No hay alquileres pendientes de entrega', 'info');
-          }
-        },
-        error: (error) => {
-          console.error('Error al cargar alquileres pendientes:', error);
-          this.mostrarMensaje('Error al cargar los alquileres pendientes', 'error');
-          this.cargando = false;
+  this.cargando = true;
+  this.adminService.obtenerAlquileresPendientesEntrega()
+    .subscribe({
+      next: (alquileres: Alquiler[]) => {
+        this.alquileresPendientes = alquileres;
+        this.cargando = false;
+        if (alquileres.length === 0) {
+          this.mostrarMensaje('No hay alquileres pendientes de entrega', 'info');
         }
-      });
-  }
+      },
+      error: (error) => {
+        console.error('Error al cargar alquileres pendientes:', error);
+        this.mostrarMensaje('Error al cargar los alquileres pendientes', 'error');
+        this.cargando = false;
+      }
+    });
+}
 
   filtrarPorTipo(): void {
     if (!this.tipoVehiculoSeleccionado) {
@@ -189,4 +190,22 @@ irAConsultarVehiculo() {
   this.router.navigate(['/consultar-vehiculo-admin']);
 
 }
-}
+  
+    entregarVehiculo(alquiler: Alquiler): void {
+      alquiler.estado = 'Entregado'; // Cambiar el estado del alquiler a 'Entregado'
+      this.adminService.entregarVehiculo(alquiler).subscribe({
+        next: (resp) => {
+          this.mostrarMensaje('Vehículo entregado exitosamente', 'success');
+          this.cargarAlquileresPendientes(); // Recargar la lista de alquileres pendientes
+        },
+        error: (err) => {
+          console.error('Error al entregar el vehículo:', err);
+          this.mostrarMensaje('Error al entregar el vehículo', 'error');
+        }
+      });
+    }
+
+  }
+
+    
+

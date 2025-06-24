@@ -45,6 +45,7 @@ public class AlquilerControlador {
     @PostMapping("/GuardarAlquiler")
     public ResponseEntity<?> guardarAlquiler(@RequestBody Alquiler alquiler) {
         try {
+<<<<<<< HEAD
             // Validaciones básicas
             if (alquiler.getUsuario() == null) {
                 return ResponseEntity.badRequest().body("El usuario es obligatorio");
@@ -57,6 +58,42 @@ public class AlquilerControlador {
             }
             if (alquiler.getFecha_entrega() == null) {
                 return ResponseEntity.badRequest().body("La fecha de entrega es obligatoria");
+=======
+            Alquiler nuevoAlquiler = repositorioAlquiler.save(alquiler);
+            return ResponseEntity.ok(nuevoAlquiler);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al guardar el alquiler: " + e.getMessage());
+        }
+    }
+    
+    
+    
+    @PostMapping("/actualizarAlquiler")
+    public ResponseEntity<Alquiler> actualizarAlquiler(@RequestBody Alquiler alquiler) {
+        if (!repositorioAlquiler.existsById(alquiler.getNumero_alquiler())) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // o HttpStatus.BAD_REQUEST
+        }
+
+        Alquiler actualizado = repositorioAlquiler.save(alquiler);
+        return ResponseEntity.ok(actualizado);
+    }
+
+    
+    
+    
+    @PostMapping("/CancelarAlquiler")
+    public ResponseEntity<?> cancelarAlquiler(@RequestParam int numeroAlquiler) {
+        try {
+            System.out.println("Intentando cancelar alquiler: " + numeroAlquiler);
+            
+            Optional<Alquiler> alquilerOpt = repositorioAlquiler.findById(numeroAlquiler);
+            
+            if (!alquilerOpt.isPresent()) {
+                System.out.println("Alquiler no encontrado: " + numeroAlquiler);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Alquiler no encontrado");
+>>>>>>> rama-Samuel
             }
             
             // Establecer estado por defecto

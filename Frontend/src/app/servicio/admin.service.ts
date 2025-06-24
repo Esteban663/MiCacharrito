@@ -22,10 +22,17 @@ export class AdminService {
     return this.http.get<Alquiler[]>(`${this.apiUrl}/AlquileresPendientesEntregaPorTipo`, { params });
   }
 
+
   // Busca Alquiler Por vehiculo
   BuscarAlquilerPorVehiculo(placa: string): Observable<Alquiler[]> {
   return this.http.get<Alquiler[]>(`${this.apiUrl}/BuscarAlquilerPorVehiculo?placa=${placa}`);
-}
+  }
+
+  entregarVehiculo(alquiler: Alquiler): Observable<Alquiler> {
+    return this.http.post<Alquiler>(`${this.apiUrl}/actualizarAlquiler`, alquiler);
+  }
+
+
 
 RegistrarDevolucion(datos: { numeroAlquiler: number, fechaReal: string, cobroAdicional: number }): Observable<any> {
   return this.http.post(`${this.apiUrl}/RegistrarDevolucion`, datos);
