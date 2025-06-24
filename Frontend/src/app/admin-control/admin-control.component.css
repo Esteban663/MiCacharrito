@@ -1,6 +1,4 @@
-html, body {
-     background: #121212;
-}
+
 .card.bg-danger {
     background: #e0e0e0 !important; /* Gris claro */
     color: #333;
@@ -41,4 +39,12 @@ html, body {
 
 .fw-bold {
     color: #fffdfd;
+}
+
+.btn-iniciar{
+  background-color: #444444; /* gris oscuro */
+  color: #fff; /* letra blanca */
+  border: none;
+  padding: 0.5rem 1.2rem;
+  cursor: pointer;
 }

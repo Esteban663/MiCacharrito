@@ -116,3 +116,16 @@ a{
   box-shadow: 0 2px 16px rgba(0,0,0,0.3);
   text-align: center;
 }
+
+.registrar {
+  color: #ececec !important;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.cuenta{
+  color: #d4d0d0 !important;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-left: 8px; /* Espacio entre "Cuenta" y el enlace */
+}
