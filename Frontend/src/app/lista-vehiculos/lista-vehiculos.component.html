@@ -1,5 +1,48 @@
+    <div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="mb-4">
+        <i class="fas fa-truck text-warning"></i>
+        Listado de Vehículos en Alquiler
+      </h1>
 
-    <h1>Vehiculos En Alquiler</h1>
+      <!-- Panel de filtros -->
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5 class="card-title mb-0">
+            <i class="fas fa-filter"></i>
+            Filtros
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <label for="tipoVehiculo" class="form-label">Categorias Vehiculos:</label>
+              <select 
+                id="tipoVehiculo"
+                class="form-select" 
+                [(ngModel)]="tipoVehiculoSeleccionado"
+                (change)="filtarPorTipo()">
+                <option value="">Todos los tipos</option>
+                <option *ngFor="let tipo of tiposVehiculos" [value]="tipo">
+                  {{ tipo | titlecase }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-6 d-flex align-items-end">
+              <button 
+                class="btn btn-outline-secondary me-2"
+                (click)="limpiarFiltro()"
+                [disabled]="cargando">
+                <i class="fas fa-times"></i>
+                Limpiar filtro
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <h2>Vehiculos En Alquiler</h2>
 
     <table>
         <thead>
@@ -14,7 +57,7 @@
         </thead>
         <tbody>
             
-            <tr *ngFor="let car of vehiculo">
+            <tr *ngFor="let car of vehiculosFiltrados">
                 <td>{{ car.placa }}</td>
                 <td>{{ car.tipo }}</td>
                 <td>{{ car.color }}</td>
@@ -70,7 +113,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
-                    <button type="submit" class="btn btn-primary" [disabled]="!alquilerForm.form.valid" (click)="alquilarVehiculo(vehiculoSeleccionado, alquiler)">Confirmar</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!alquilerForm.form.valid" (click)="alquilarVehiculo(vehiculoSeleccionado, alquiler); onGeneratePDF(alquiler)">Confirmar</button>
                 </div>
             </div>
         </div>

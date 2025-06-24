@@ -53,6 +53,21 @@ public class AlquilerControlador {
         }
     }
     
+    
+    
+    @PostMapping("/actualizarAlquiler")
+    public ResponseEntity<Alquiler> actualizarAlquiler(@RequestBody Alquiler alquiler) {
+        if (!repositorioAlquiler.existsById(alquiler.getNumero_alquiler())) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // o HttpStatus.BAD_REQUEST
+        }
+
+        Alquiler actualizado = repositorioAlquiler.save(alquiler);
+        return ResponseEntity.ok(actualizado);
+    }
+
+    
+    
+    
     @PostMapping("/CancelarAlquiler")
     public ResponseEntity<?> cancelarAlquiler(@RequestParam int numeroAlquiler) {
         try {

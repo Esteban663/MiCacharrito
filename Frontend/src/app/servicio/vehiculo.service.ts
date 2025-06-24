@@ -29,4 +29,9 @@ export class VehiculoService {
     console.log(resp);
     return resp;
   }
+  
+  private BdURA = "http://localhost:8080/ver/BuscarVehiculoPorTipo";
+  obtenerVehiculoPorTipo(tipo: string): Observable<Vehiculo[]> {
+    return this.httpClient.get<Vehiculo[]>(`${this.BdURA}/${tipo}`);
+  }
 }

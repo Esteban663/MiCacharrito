@@ -21,4 +21,9 @@ export class AdminService {
     const params = new HttpParams().set('tipoVehiculo', tipoVehiculo);
     return this.http.get<Alquiler[]>(`${this.apiUrl}/AlquileresPendientesEntregaPorTipo`, { params });
   }
+
+
+  entregarVehiculo(alquiler: Alquiler): Observable<Alquiler> {
+    return this.http.post<Alquiler>(`${this.apiUrl}/actualizarAlquiler`, alquiler);
+  }
 }

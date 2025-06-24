@@ -1,56 +1,181 @@
 <div class="container mt-4">
-    <h2 class="text-center mb-4 fw-bold">Panel de Control - Mi Cacharrito</h2>
+  <h2 class="text-center mb-4 fw-bold">Panel de Control - Mi Cacharrito</h2>
 
-    <!-- Tabla de Vehículos Pendientes de Entrega -->
-    <div class="card bg-danger text-white mb-4">
-      <div class="card-header fw-bold">Vehículos Pendientes de Entrega</div>
-      <div class="card-body bg-dark p-2">
-        <div class="table-responsive">
-          <table class="table table-dark table-bordered text-center align-middle">
-            <thead class="table-danger">
-              <tr>
-                <th>Id Alquiler</th>
-                <th>Id Vehículo</th>
-                <th>Placa</th>
-                <th>Modelo</th>
-                <th>Color</th>
-                <th>Tipo de Vehículo</th>
-                <th>Valor de Alquiler</th>
-                <th>Estado del Vehículo</th>
-                <th>Estado del Alquiler</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                
-              </tr>
-              <!-- Aquí más filas si es necesario -->
-            </tbody>
-          </table>
-        </div>
-      </div>
+  <!-- Panel de filtros -->
+  <div class="card mb-4">
+    <div class="card-header">
+      <h5 class="card-title mb-0">
+        <i class="fas fa-filter"></i>
+        Filtros
+      </h5>
     </div>
-
-    <!-- Entregar Vehículo al Usuario -->
-    <div class="card bg-danger text-white mb-3">
-      <div class="card-header fw-bold">Entregar Vehículo al Usuario</div>
-      <div class="card-body bg-dark">
-        <div class="input-group">
-          <input type="text" class="form-control bg-dark text-white border-danger" placeholder="Ingrese placa del vehículo">
-          <button class="btn btn-danger">Entregar</button>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <label for="tipoVehiculo" class="form-label">Filtrar por tipo de vehículo:</label>
+          <select 
+            id="tipoVehiculo"
+            class="form-select" 
+            [(ngModel)]="tipoVehiculoSeleccionado"
+            (change)="filtrarPorTipo()">
+            <option value="">Todos los tipos</option>
+            <option *ngFor="let tipo of tiposVehiculos" [value]="tipo">
+              {{ tipo | titlecase }}
+            </option>
+          </select>
         </div>
-      </div>
-    </div>
-
-    <!-- Finalizar Alquiler -->
-    <div class="card bg-danger text-white">
-      <div class="card-header fw-bold">Finalizar Alquiler</div>
-      <div class="card-body bg-dark">
-        <div class="input-group">
-          <input type="text" class="form-control bg-dark text-white border-danger" placeholder="Número de alquiler">
-          <button class="btn btn-danger">Finalizar</button>
+        <div class="col-md-6 d-flex align-items-end">
+          <button 
+            class="btn btn-outline-secondary me-2"
+            (click)="limpiarFiltro()"
+            [disabled]="cargando">
+            <i class="fas fa-times"></i>
+            Limpiar filtro
+          </button>
+          <button 
+            class="btn btn-primary"
+            (click)="cargarAlquileresPendientes()"
+            [disabled]="cargando">
+            <i class="fas fa-sync-alt"></i>
+            Actualizar
+          </button>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Mensaje de notificación -->
+  <div *ngIf="mensaje" class="alert" 
+       [ngClass]="{
+         'alert-success': tipoMensaje === 'success',
+         'alert-danger': tipoMensaje === 'error',
+         'alert-info': tipoMensaje === 'info'
+       }" 
+       role="alert">
+    <i class="fas" 
+       [ngClass]="{
+         'fa-check-circle': tipoMensaje === 'success',
+         'fa-exclamation-circle': tipoMensaje === 'error',
+         'fa-info-circle': tipoMensaje === 'info'
+       }"></i>
+    {{ mensaje }}
+  </div>
+
+  <!-- Spinner de carga -->
+  <div *ngIf="cargando" class="text-center my-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+    <p class="mt-2 text-muted">Cargando alquileres pendientes...</p>
+  </div>
+
+ <!-- Tabla de alquileres pendientes -->
+      <div *ngIf="!cargando && alquileresPendientes.length > 0" class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title mb-0">
+                <i class="fas fa-list"></i>
+                Alquileres Pendientes de Entrega ({{ alquileresPendientes.length }})
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead class="table-dark">
+                    <tr>
+                      <th>N° Alquiler</th>
+                      <th>Usuario</th>
+                      <th>ID Usuario</th>
+                      <th>Vehículo</th>
+                      <th>Placa</th>
+                      <th>Color</th>
+                      <th>Fecha Inicio</th>
+                      <th>Fecha Entrega</th>
+                      <th>Valor Total</th>
+                      <th>Estado</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let alquiler of alquileresPendientes">
+                      <td>
+                        <strong class="text-primary">#{{ alquiler.numero_alquiler }}</strong>
+                      </td>
+                      <td>
+                        <strong>{{ alquiler.usuario?.nombre_completo }}</strong>
+                      </td>
+                      <td>
+                        <span class="badge bg-secondary">{{ alquiler.usuario?.identificacion }}</span>
+                      </td>
+                      <td>
+                        <span class="badge bg-info text-dark">{{ alquiler.vehiculo?.tipo | titlecase }}</span>
+                      </td>
+                      <td>
+                        <code class="bg-light text-dark px-2 py-1 rounded">{{ alquiler.vehiculo?.placa }}</code>
+                      </td>
+                      <td>
+                        <span class="text-muted">{{ alquiler.vehiculo?.color | titlecase }}</span>
+                      </td>
+                      <td>{{ formatearFecha(alquiler.fecha_inicio) }}</td>
+                      <td>{{ formatearFecha(alquiler.fecha_entrega) }}</td>
+                      <td>
+                        <strong class="text-success">
+                          ${{ alquiler.valor_total | number:'1.0-0' }}
+                        </strong>
+                      </td>
+                      <td>
+                        <span class="badge bg-warning text-dark">
+                          <i class="fas fa-clock"></i>
+                          {{ alquiler.estado }}
+                        </span>
+                      </td>
+                      <td>
+                        <button 
+                          class="btn btn-success btn-sm"
+                          (click)="entregarVehiculo(alquiler)">
+                          <i class="fas fa-check"></i>
+                          Entregar
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  <!-- Mensaje cuando no hay alquileres -->
+  <div *ngIf="!cargando && alquileresPendientes.length === 0 && !mensaje" 
+       class="text-center my-5">
+    <div class="card">
+      <div class="card-body">
+        <i class="fas fa-info-circle fa-3x text-info mb-3"></i>
+        <h4>No hay alquileres pendientes</h4>
+        <p class="text-muted">
+          No hay vehículos pendientes de entrega en este momento.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <!-- Finalizar Alquiler -->
+  <div class="card bg-danger text-white">
+    <div class="card-header fw-bold">Finalizar Alquiler</div>
+    <div class="card-body bg-dark">
+      <div class="input-group">
+        <input type="text" class="form-control bg-dark text-white border-danger" placeholder="Número de alquiler">
+        <button class="btn btn-danger">Finalizar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botones de navegación -->
+  <div class="mt-4">
+    <a href="/admin-dashboard" class="btn btn-secondary">
+      <i class="fas fa-arrow-left"></i>
+      Volver al Panel Admin

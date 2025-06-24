@@ -50,12 +50,15 @@ export class LoginUsuarioComponent {
 
 
         // Oculta el formulario después del login exitoso
-        this.router.navigate(['/usuario']);
         this.mostrarFormulario = false; // Oculta el formulario después del login exitoso
 
       },
       error: (err) => {
         this.errorMsg = 'Usuario o contraseña incorrectos';
+
+         setTimeout(() => {
+          this.errorMsg = '';
+        }, 3000);
       }
     });
   }
