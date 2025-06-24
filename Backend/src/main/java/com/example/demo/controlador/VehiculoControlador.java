@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.modelo.Vehiculo;
 import com.example.demo.repositorio.RepositorioVehiculo;
 
-@CrossOrigin(origins = "http://localhost:4200") // Permitir peticiones desde Angular
 @RestController
 @RequestMapping("/ver/")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class VehiculoControlador {
 	@Autowired
 	private RepositorioVehiculo repositorio;
@@ -40,6 +40,20 @@ public class VehiculoControlador {
 		    return null;
 		}
 	}
+	
+	@PostMapping("/ActualizarEstadoVehiculo")
+	public ResponseEntity<?> ActualizarEstadoVehiculo(@RequestBody Vehiculo vehiculo) {
+	    if (repositorio.existsById(vehiculo.getPlaca())) {
+	        Vehiculo vehiculo1 = repositorio.findById(vehiculo.getPlaca()).get();
+	        vehiculo1.setEstado(vehiculo.getEstado());
+	        repositorio.save(vehiculo1);
+	        return ResponseEntity.ok("Estado del vehículo actualizado a: " + vehiculo.getEstado());
+	    } else {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                             .body("No se encontró un vehículo con placa: " + vehiculo.getPlaca());
+	    }
+	}
+
 	
 	@PostMapping("/GuardarVehiculo")
 	public Vehiculo GuardarVehiculo(@RequestBody Vehiculo vehiculo) {
@@ -70,5 +84,7 @@ public class VehiculoControlador {
 
 	    return ResponseEntity.ok(vehiculos);
 	}
+	
+
 
 }

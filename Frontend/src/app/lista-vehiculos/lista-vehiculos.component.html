@@ -1,0 +1,38 @@
+
+    <h1>Vehiculos En Alquiler</h1>
+
+
+    <!-- Botón agregado para cancelar alquiler -->
+<div class="mb-3">
+    <button class="btn btn-warning" (click)="irACancelarAlquiler()">
+        <i class="fas fa-times-circle"></i>
+        Cancelar Alquiler
+    </button>
+</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Placa</th>
+                <th>Nombre</th>
+                <th>Color</th>
+                <th>Valor Alquiler</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr *ngFor="let car of vehiculo">
+                <td>{{ car.placa }}</td>
+                <td>{{ car.tipo }}</td>
+                <td>{{ car.color }}</td>
+                <td>{{ car.valor_alquiler }}</td>
+                <td>{{ car.estado }}</td>
+                <td>
+                    <button (click)="alquilarVehiculo(car)">Alquilar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+

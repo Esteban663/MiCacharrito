@@ -20,10 +20,16 @@
           >
            <!-- Botones de selección de tipo de usuario -->
   <div class="mb-4 d-flex justify-content-between">
-    
     <button 
       type="button" 
       class="btn btn-outline-light me-2"
+      (click)="irAUsuario()"
+    >
+      Usuario
+    </button>
+    <button 
+      type="button" 
+      class="btn btn-outline-warning"
       (click)="irAAdministrador()"
     >
       Administrador
@@ -32,13 +38,13 @@
 
             <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px; color: #fff;">Iniciar Sesión</h3>
             <div class="mb-4">
-              <label class="form-label" for="identificacion">Usuario</label>
+              <label class="form-label" for="usuario">Usuario</label>
               <input 
                 type="text" 
-                id="identificacion" 
+                id="usuario" 
                 class="form-control" 
                 placeholder="Ingresa tu usuario" 
-                formControlName="identificacion"
+                formControlName="usuario"
               />
             </div>
 
@@ -59,11 +65,6 @@
               <button class="login-btn btn-iniciar" type="submit" [disabled]="loginForm.invalid">Iniciar sesión</button>
             </div>
 
-            <p>
-              ¿No tienes cuenta?
-              <a href="#!" class="link-registrate">Regístrate aquí</a>
-            </p>
-
           </form>
 
         </div>
@@ -71,7 +72,7 @@
       </div>
       <div class="col-sm-6 px-0 d-none d-sm-block">
         <img src="/assets/imagenes/carroA.jpg"
-          alt="Classic car parked on a street with a warm and nostalgic atmosphere, surrounded by urban buildings and soft evening light"
+          alt="A classic car is parked on a quiet road lined with tall trees, surrounded by mist that creates a calm and nostalgic atmosphere. The scene feels peaceful and reflective. There is no visible text in the image."
           class="w-100 vh-100" style="object-fit: cover; object-position: left;">
         </div>
     </div>

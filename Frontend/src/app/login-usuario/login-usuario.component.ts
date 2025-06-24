@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Router} from '@angular/router';
 import { LoginUsuarioService } from '../servicio/login-usuario.service';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../servicio/auth.service';
 
 
 
@@ -19,11 +20,14 @@ import { CommonModule } from '@angular/common';
 export class LoginUsuarioComponent {
   loginForm: FormGroup;
   errorMsg: string = '';
+  mostrarFormulario = true;
+  cargando = false;
 
   // Inyecta el identificador de plataforma en el constructor
     constructor(
     private fb: FormBuilder,
-    private authService: LoginUsuarioService, // Asegúrate de que este servicio esté correctamente importado
+    private authService: LoginUsuarioService, 
+    private authStateService: AuthService,
     private router: Router,
   ) {
     this.loginForm = this.fb.group({
@@ -32,48 +36,45 @@ export class LoginUsuarioComponent {
     });
   }
    
-  mostrarFormulario = true;
+
+    // Cuando quieras ocultar el formulario, pon:
   onSubmit() {
+    console.log('submit');
     console.log(this.loginForm.value);
-    if (this.loginForm.invalid) return;
+    if (this.loginForm.invalid) {
+      this.errorMsg = 'Por favor completa todos los campos';
+      return;
+    } 
 
     const { identificacion, password } = this.loginForm.value;
+      this.cargando = true;
+      this.errorMsg = '';
+
+    // Llama al servicio de autenticación para hacer login
     this.authService.login(identificacion, password).subscribe({
       next: (resp) => {
         // Si el login es exitoso, redirige
         alert('Login exitoso');
-        this.router.navigate(['/usuario']);
+        this.router.navigate(['/lista-vehiculos']);
         this.mostrarFormulario = false; // Oculta el formulario después del login exitoso
-
+        this.cargando = false;
+        
+        // Pequeña pausa para que el AuthService procese los datos del usuario
+        setTimeout(() => {
+          this.router.navigate(['/lista-vehiculos']);
+        }, 500);
       },
       error: (err) => {
         this.errorMsg = 'Usuario o contraseña incorrectos';
+         this.cargando = false;
+        console.error('Error en login:', err);
       }
     });
   }
 
 
-/*
-abrirLoginUsuario() {
-    const modal = document.getElementById('login');
-    if (modal !== null) {
-      modal.style.display = 'block';
-    }
-  }
-  cerrarLoginUsuario() {
-  const modal = document.getElementById('login');
-  
-  if (modal !== null) {
-    // 1. Eliminar el foco del elemento actualmente enfocado
-    if (document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur();
-    }
-
-    // 2. Ocultar el modal y marcarlo como inaccesible para lectores de pantalla
-    modal.style.display = 'none';
-    modal.setAttribute('aria-hidden', 'true');
-  }
+irAAdministrador() {
+  this.router.navigate(['/login-admin']);
+  this.mostrarFormulario = false;
 }
-
-  */
 }
