@@ -36,8 +36,6 @@ export class LoginUsuarioComponent {
     });
   }
 
-  mostrarFormulario = true;
-
 
   // Cuando quieras ocultar el formulario, pon:
   onSubmit() {

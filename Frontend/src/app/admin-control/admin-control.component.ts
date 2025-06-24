@@ -179,7 +179,8 @@ consultarAlquiler() {
       this.alquilerEncontrado.estado = 'devuelto';
       // Aquí puedes limpiar campos o actualizar arrays si lo necesitas
     },
-    error: () => {
+    error: (err) => {
+      console.error('Error detalle al registrar devolución:', err); // <-- Agrega esto
       this.mensajeC = 'Error al registrar la devolución.';
       this.exito = false;
     }

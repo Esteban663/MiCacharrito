@@ -33,9 +33,15 @@ export class AdminService {
   }
 
 
-
+/*
 RegistrarDevolucion(datos: { numeroAlquiler: number, fechaReal: string, cobroAdicional: number }): Observable<any> {
   return this.http.post(`${this.apiUrl}/RegistrarDevolucion`, datos);
+}
+  */
+RegistrarDevolucion(datos: { numeroAlquiler: number, fechaReal: string, cobroAdicional: number }): Observable<any> {
+  return this.http.post(`${this.apiUrl}/RegistrarDevolucion`, datos, {
+    responseType: 'text' as 'json'  
+  });
 }
 
 // Busca un alquiler por su número de alquiler

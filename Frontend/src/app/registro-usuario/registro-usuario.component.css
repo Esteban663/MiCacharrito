@@ -1,0 +1,49 @@
+/* Puedes agregar esto en styles.css o en el CSS del componente */
+.registro-section {
+  min-height: 100vh;
+  background: #222;
+}
+
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.min-vh-100, .h-100 {
+  min-height: 100vh !important;
+  height: 100% !important;
+}
+.link-registrate {
+  color: #111 !important;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.inicia {
+  color: #ececec !important;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.btn-iniciar{
+  background-color: #444444; /* gris oscuro */
+  color: #fff; /* letra blanca */
+  border: none;
+  padding: 0.5rem 1.2rem;
+  cursor: pointer;
+}
+
+.cuenta{
+  color: #d4d0d0 !important;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-left: 8px; /* Espacio entre "Cuenta" y el enlace */
+}
+
+.form-label {
+  color: #e0e0e0 !important;
+  font-size: 1rem;
+}
