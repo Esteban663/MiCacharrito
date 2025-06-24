@@ -16,6 +16,7 @@ export class LoginAdminComponent {
 
   loginForm: FormGroup;
   errorMsg: string = '';
+  loginExitoso: boolean = false;
 
   // Inyecta el identificador de plataforma en el constructor
   constructor(
@@ -37,10 +38,12 @@ export class LoginAdminComponent {
     const { usuario, password } = this.loginForm.value;
     this.authService.loginAdmin(usuario, password).subscribe({
       next: (resp) => {
-        // Si el login es exitoso, redirige
-        alert('Login exitoso');
-        this.router.navigate(['/admin-control']);
-        this.mostrarFormulario = false; // Oculta el formulario después del login exitoso
+        this.loginExitoso = true;
+        setTimeout(() => {
+          this.loginExitoso = false;
+          this.router.navigate(['/admin-control']);
+          this.mostrarFormulario = false;
+        }, 1500); // Muestra el mensaje 1.5 segundos antes de redirigir
       },
       error: (err) => {
         this.errorMsg = 'Usuario o contraseña incorrectos Admin';

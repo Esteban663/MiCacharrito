@@ -25,4 +25,5 @@ export class VehiculoService {
   obtenerVehiculoPorTipo(tipo: string): Observable<Vehiculo[]> {
     return this.httpClient.get<Vehiculo[]>(`${this.BdURA}/${tipo}`);
   }
+
 }

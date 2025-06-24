@@ -163,19 +163,42 @@
     </div>
   </div>
 
-  <!-- Finalizar Alquiler -->
-  <div class="card bg-danger text-white">
-    <div class="card-header fw-bold">Finalizar Alquiler</div>
-    <div class="card-body bg-dark">
-      <div class="input-group">
-        <input type="text" class="form-control bg-dark text-white border-danger" placeholder="Número de alquiler">
-        <button class="btn btn-danger">Finalizar</button>
+<!-- Recibir Vehiculo -->
+<div class="card bg-danger text-white mb-3">
+  <div class="card-header fw-bold">Recibir Vehículo</div>
+  <div class="card-body bg-dark">
+    <div class="input-group mb-2">
+      <input type="text" class="form-control bg-dark text-white border-danger"
+        [(ngModel)]="busquedaAlquiler"
+        placeholder="Número de alquiler o placa">
+      <button class="btn btn-danger" (click)="consultarAlquiler()">Consultar</button>
+    </div>
+
+    <!-- Mostrar datos del alquiler si existe -->
+    <div *ngIf="alquilerEncontrado">
+      <p><strong>Fecha límite devolución:</strong> {{ alquilerEncontrado.fecha_entrega | date }}</p>
+      <div class="mb-2">
+        <label>Fecha real de devolución:</label>
+        <input type="date" class="form-control"
+          [(ngModel)]="fechaRealDevolucion">
       </div>
+      <button class="btn btn-success" (click)="finalizarDevolucion()">Finalizar devolución</button>
+    </div>
+
+    <!-- Mostrar cobro adicional si hay retraso -->
+    <div *ngIf="cobroAdicional > 0">
+      <p class="text-warning">Retraso detectado. Cobro adicional: <strong>${{ cobroAdicional }}</strong></p>
+    </div>
+
+    <!-- Mensajes -->
+    <div *ngIf="mensajeC" class="mt-2 alert" [ngClass]="{'alert-success': exito, 'alert-danger': !exito}">
+      {{ mensajeC }}
     </div>
   </div>
+</div>
 
   <!-- Botones de navegación -->
   <div class="mt-4">
     <a href="/admin-dashboard" class="btn btn-secondary">
       <i class="fas fa-arrow-left"></i>
-      Volver al Panel Admin
+      Volver al inicio de sesion

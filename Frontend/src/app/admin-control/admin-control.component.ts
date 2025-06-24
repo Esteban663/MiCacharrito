@@ -13,79 +13,171 @@ import { FormsModule } from '@angular/forms';
 })
 export class AdminControlComponent {
   alquileresPendientes: Alquiler[] = [];
-    cargando: boolean = false;
-    mensaje: string = '';
-    tipoMensaje: 'success' | 'error' | 'info' = 'info';
-    
-    // Para el filtro
-    tipoVehiculoSeleccionado: string = '';
-    tiposVehiculos: string[] = ['automovil', 'camioneta', 'campero', 'microbus', 'motocicleta'];
-  
-    constructor(private adminService: AdminService) { }
-  
-    ngOnInit(): void {
-      this.cargarAlquileresPendientes();
-    }
-  
-    cargarAlquileresPendientes(): void {
-      this.cargando = true;
-      this.adminService.obtenerAlquileresPendientesEntrega()
-        .subscribe({
-          next: (alquileres) => {
-            this.alquileresPendientes = alquileres;
-            this.cargando = false;
-            if (alquileres.length === 0) {
-              this.mostrarMensaje('No hay alquileres pendientes de entrega', 'info');
-            }
-          },
-          error: (error) => {
-            console.error('Error al cargar alquileres pendientes:', error);
-            this.mostrarMensaje('Error al cargar los alquileres pendientes', 'error');
-            this.cargando = false;
+  cargando: boolean = false;
+  mensaje: string = '';
+  tipoMensaje: 'success' | 'error' | 'info' = 'info';
+
+  // Para el filtro
+  tipoVehiculoSeleccionado: string = '';
+  tiposVehiculos: string[] = ['automovil', 'camioneta', 'campero', 'microbus', 'motocicleta'];
+
+  //Para Recibir Vehiculo
+  busquedaAlquiler: string = '';
+  alquilerEncontrado: any = null;
+  fechaRealDevolucion: string = '';
+  cobroAdicional: number = 0;
+  mensajeC: string = '';
+  exito: boolean = false;
+
+  constructor(private adminService: AdminService) { }
+
+  ngOnInit(): void {
+    this.cargarAlquileresPendientes();
+  }
+
+  cargarAlquileresPendientes(): void {
+    this.cargando = true;
+    this.adminService.obtenerAlquileresPendientesEntrega()
+      .subscribe({
+        next: (alquileres) => {
+          this.alquileresPendientes = alquileres;
+          this.cargando = false;
+          if (alquileres.length === 0) {
+            this.mostrarMensaje('No hay alquileres pendientes de entrega', 'info');
           }
-        });
+        },
+        error: (error) => {
+          console.error('Error al cargar alquileres pendientes:', error);
+          this.mostrarMensaje('Error al cargar los alquileres pendientes', 'error');
+          this.cargando = false;
+        }
+      });
+  }
+
+  filtrarPorTipo(): void {
+    if (!this.tipoVehiculoSeleccionado) {
+      this.cargarAlquileresPendientes();
+      return;
     }
-  
-    filtrarPorTipo(): void {
-      if (!this.tipoVehiculoSeleccionado) {
-        this.cargarAlquileresPendientes();
-        return;
+
+    this.cargando = true;
+    this.adminService.obtenerAlquileresPendientesPorTipo(this.tipoVehiculoSeleccionado)
+      .subscribe({
+        next: (alquileres) => {
+          this.alquileresPendientes = alquileres;
+          this.cargando = false;
+          if (alquileres.length === 0) {
+            this.mostrarMensaje(`No hay alquileres pendientes de ${this.tipoVehiculoSeleccionado}`, 'info');
+          }
+        },
+        error: (error) => {
+          console.error('Error al filtrar alquileres:', error);
+          this.mostrarMensaje('Error al filtrar los alquileres', 'error');
+          this.cargando = false;
+        }
+      });
+  }
+
+  limpiarFiltro(): void {
+    this.tipoVehiculoSeleccionado = '';
+    this.cargarAlquileresPendientes();
+  }
+
+  mostrarMensaje(texto: string, tipo: 'success' | 'error' | 'info'): void {
+    this.mensaje = texto;
+    this.tipoMensaje = tipo;
+
+    setTimeout(() => {
+      this.mensaje = '';
+    }, 5000);
+  }
+
+  formatearFecha(fecha: string): string {
+    return new Date(fecha).toLocaleDateString('es-CO');
+  }
+
+consultarAlquiler() {
+  if (!this.busquedaAlquiler) {
+    this.mensajeC = 'Ingrese número de alquiler o placa.';
+    this.exito = false;
+    return;
+  }
+
+  // Si es un número, busca por id_alquiler
+  if (!isNaN(Number(this.busquedaAlquiler))) {
+    console.log('Buscando alquiler:', this.busquedaAlquiler);
+    this.adminService.BuscarAlquilerPorId(Number(this.busquedaAlquiler)).subscribe({
+      next: (alquiler) => {
+        console.log('Respuesta alquiler:', alquiler);
+        this.alquilerEncontrado = alquiler;
+        this.mensajeC = '';
+        this.fechaRealDevolucion = '';
+        this.cobroAdicional = 0;
+        this.exito = true;
+      },
+      error: () => {
+        this.alquilerEncontrado = null;
+        this.mensajeC = 'No se encontró el alquiler por ID.';
+        this.exito = false;
       }
-  
-      this.cargando = true;
-      this.adminService.obtenerAlquileresPendientesPorTipo(this.tipoVehiculoSeleccionado)
-        .subscribe({
-          next: (alquileres) => {
-            this.alquileresPendientes = alquileres;
-            this.cargando = false;
-            if (alquileres.length === 0) {
-              this.mostrarMensaje(`No hay alquileres pendientes de ${this.tipoVehiculoSeleccionado}`, 'info');
-            }
-          },
-          error: (error) => {
-            console.error('Error al filtrar alquileres:', error);
-            this.mostrarMensaje('Error al filtrar los alquileres', 'error');
-            this.cargando = false;
-          }
-        });
+    });
+  } else {
+    // Si no es número, busca por placa
+    console.log('Buscando alquiler:', this.busquedaAlquiler);
+    this.adminService.BuscarAlquilerPorVehiculo(this.busquedaAlquiler).subscribe({
+      next: (alquiler) => {
+        console.log('Respuesta alquiler:', alquiler);
+        this.alquilerEncontrado = alquiler;
+        this.mensajeC = '';
+        this.fechaRealDevolucion = '';
+        this.cobroAdicional = 0;
+        this.exito = true;
+      },
+      error: () => {
+        this.alquilerEncontrado = null;
+        this.mensajeC = 'No se encontró el alquiler por placa.';
+        this.exito = false;
+      }
+    });
+  }
+}
+
+  finalizarDevolucion() {
+  if (!this.fechaRealDevolucion) {
+    this.mensajeC = 'Debe ingresar la fecha real de devolución.';
+    this.exito = false;
+    return;
+  }
+  const fechaLimite = new Date(this.alquilerEncontrado.fecha_entrega);
+  const fechaReal = new Date(this.fechaRealDevolucion);
+  if (fechaReal > fechaLimite) {
+    const diasRetraso = Math.ceil((fechaReal.getTime() - fechaLimite.getTime()) / (1000 * 3600 * 24));
+    this.cobroAdicional = diasRetraso * 50000; // Ejemplo: $50.000 por día de retraso
+  } else {
+    this.cobroAdicional = 0;
+  }
+  // Llama al servicio para registrar la devolución
+  console.log({
+  numeroAlquiler: this.alquilerEncontrado.numero_alquiler,
+  fechaReal: this.fechaRealDevolucion,
+  cobroAdicional: this.cobroAdicional
+});
+  this.adminService.RegistrarDevolucion({
+    numeroAlquiler: this.alquilerEncontrado.numero_alquiler,
+    fechaReal: this.fechaRealDevolucion,
+    cobroAdicional: this.cobroAdicional
+  }).subscribe({
+    next: () => {
+      this.mensajeC = 'Devolución registrada correctamente.';
+      this.exito = true;
+      this.alquilerEncontrado.estado = 'devuelto';
+      // Aquí puedes limpiar campos o actualizar arrays si lo necesitas
+    },
+    error: () => {
+      this.mensajeC = 'Error al registrar la devolución.';
+      this.exito = false;
     }
-  
-    limpiarFiltro(): void {
-      this.tipoVehiculoSeleccionado = '';
-      this.cargarAlquileresPendientes();
-    }
-  
-    mostrarMensaje(texto: string, tipo: 'success' | 'error' | 'info'): void {
-      this.mensaje = texto;
-      this.tipoMensaje = tipo;
-      
-      setTimeout(() => {
-        this.mensaje = '';
-      }, 5000);
-    }
-  
-    formatearFecha(fecha: string): string {
-      return new Date(fecha).toLocaleDateString('es-CO');
-    }
+  });
+}
 
 }

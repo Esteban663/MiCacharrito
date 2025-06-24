@@ -1,6 +1,7 @@
 package com.example.demo.controlador;
 
 import java.util.List;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,4 +115,12 @@ public class AlquilerControlador {
     public List<Alquiler> verAlquileresPendientesEntregaPorTipo(@RequestParam String tipoVehiculo) {
         return repositorioAlquiler.findByEstadoAndVehiculoTipo("pendiente de entrega", tipoVehiculo);
     }
+    
+    
+    @GetMapping("/BuscarAlquilerPorVehiculo")
+    public List<Alquiler> verBuscarAlquilerVehiculo(@RequestParam String placa){
+    	return repositorioAlquiler.findByVehiculoPlaca(placa);
+    }
+    
+   
 }

@@ -1,7 +1,9 @@
 package com.example.demo.controlador;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.modelo.Administrador;
+import com.example.demo.modelo.Alquiler;
+import com.example.demo.modelo.Vehiculo;
 import com.example.demo.repositorio.RepositorioAdministrador;
+import com.example.demo.repositorio.RepositorioAlquiler;
+import com.example.demo.repositorio.RepositorioVehiculo;
 
 
 @RestController
@@ -24,6 +30,12 @@ import com.example.demo.repositorio.RepositorioAdministrador;
 public class AdministradorControlador {
 	@Autowired
 	private RepositorioAdministrador repositorio;
+	
+	@Autowired
+	private RepositorioAlquiler repositorioAlquiler;
+
+	@Autowired
+	private RepositorioVehiculo repositorioVehiculo;
 	
 	@GetMapping("/Administradores")
 	public List<Administrador> verAdministradores(){
@@ -96,7 +108,46 @@ public class AdministradorControlador {
 	     }
 	 }
 	
+	 @PostMapping("/RegistrarDevolucion")
+	    public ResponseEntity<?> registrarDevolucion(@RequestBody Map<String, Object> datos) {
 		
-	}
+	        int numeroAlquiler = (int) datos.get("numeroAlquiler");
+	        String fechaRealStr = (String) datos.get("fechaReal");
+	        LocalDate fechaReal = LocalDate.parse(fechaRealStr);
+	        int cobroAdicional = (int) datos.get("cobroAdicional");
+	       
+	        		
+	        		
+	        // Aquí tu lógica para registrar la devolución
+	    	if(repositorioAlquiler.existsById(numeroAlquiler)) {
+	    		
+	    		// Registrar la fecha real de devolución y el cobro adicional 
+	    		Alquiler alquiler = repositorioAlquiler.findById(numeroAlquiler).get();
+	    		int valorTotalActual = alquiler.getValor_total();
+	 	        int nuevoValor_total =  valorTotalActual + cobroAdicional;
+	    		alquiler.setFecha_entrega(fechaReal);
+	    		alquiler.setValor_total(nuevoValor_total);
+	    		alquiler.setEstado("Devuelto");
+	   
+	    		
+	    		repositorioAlquiler.save(alquiler);
+	    		
+	    		
+	    		// Cambiar estado del vehículo a "Disponible"
+	            Vehiculo vehiculo = alquiler.getVehiculo();
+	            vehiculo.setEstado("Disponible");
+	            repositorioVehiculo.save(vehiculo);
+	    		return ResponseEntity.ok("Devolución registrada correctamente.");
+	    	}
+	    	else {
+	    		return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	    				.body("No se encontro alquiler con numero: " +numeroAlquiler);
+	    	}
+	        
+	    }
+	 }
+	
+		
+	
 	
 

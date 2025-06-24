@@ -56,4 +56,7 @@ export class AlquilerService {
   guardarAlquiler(alquiler: Alquiler): Observable<Alquiler> {
     return this.http.post<Alquiler>(`${this.apiUrl}/GuardarAlquiler`, alquiler);
   }
+
+  
+ 
 }
