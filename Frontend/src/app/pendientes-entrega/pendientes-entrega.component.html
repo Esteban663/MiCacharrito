@@ -107,19 +107,19 @@
                         <strong class="text-primary">#{{ alquiler.numero_alquiler }}</strong>
                       </td>
                       <td>
-                        <strong>{{ alquiler.usuario?.nombre_completo }}</strong>
+                        <strong>{{ alquiler.usuario.nombre_completo }}</strong>
                       </td>
                       <td>
-                        <span class="badge bg-secondary">{{ alquiler.usuario?.identificacion }}</span>
+                        <span class="badge bg-secondary">{{ alquiler.usuario.identificacion }}</span>
                       </td>
                       <td>
-                        <span class="badge bg-info text-dark">{{ alquiler.vehiculo?.tipo | titlecase }}</span>
+                        <span class="badge bg-info text-dark">{{ alquiler.vehiculo.tipo | titlecase }}</span>
                       </td>
                       <td>
-                        <code class="bg-light text-dark px-2 py-1 rounded">{{ alquiler.vehiculo?.placa }}</code>
+                        <code class="bg-light text-dark px-2 py-1 rounded">{{ alquiler.vehiculo.placa }}</code>
                       </td>
                       <td>
-                        <span class="text-muted">{{ alquiler.vehiculo?.color | titlecase }}</span>
+                        <span class="text-muted">{{ alquiler.vehiculo.color | titlecase }}</span>
                       </td>
                       <td>{{ formatearFecha((alquiler.fecha_inicio ? alquiler.fecha_inicio.toString() : '')) }}</td>
                       <td>{{ formatearFecha(alquiler.fecha_entrega ? alquiler.fecha_entrega.toString() : '') }}</td>

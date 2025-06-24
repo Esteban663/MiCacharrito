@@ -61,14 +61,6 @@ export class LoginUsuarioComponent {
           this.mostrarFormulario = false;
         }, 1500); // Muestra el mensaje 1.5 segundos antes de redirigir
 
-        // Si el login es exitoso, redirige
-        alert('Login exitoso');
-        this.router.navigate(['/lista-vehiculos']);
-        this.mostrarFormulario = false;
-        
-
-         // Oculta el formulario después del login exitoso
-
       },
       
       error: (err) => {

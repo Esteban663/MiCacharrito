@@ -97,7 +97,7 @@ export class AdminControlComponent {
     }, 5000);
   }
 
-  formatearFecha(fecha: string): string {
+  formatearFecha(fecha: Date): string {
     return new Date(fecha).toLocaleDateString('es-CO');
   }
 

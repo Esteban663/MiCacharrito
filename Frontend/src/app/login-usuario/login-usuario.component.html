@@ -1,3 +1,6 @@
+ <div *ngIf="loginExitoso" class="ventana-exito">
+  ¡Login exitoso!
+</div>
 <!-- login-usuario.component.html -->
 <section class="vh-100" *ngIf="mostrarFormulario" style="background: #222;">
   <div class="container-fluid">
@@ -57,11 +60,7 @@
             <p class="cuenta">
               ¿No tienes cuenta?
 
-              <a href="#!" class="link-registrate registrar">Regístrate aquí</a>
-
-              <button type="button" class="btn btn-outline-light me-2" (click)="irRegistroUsuario()">
-                Registrate
-              </button>
+              <a class="link-registrate registrar" (click)="irRegistroUsuario()">Regístrate aquí</a>
 
             </p>
 
