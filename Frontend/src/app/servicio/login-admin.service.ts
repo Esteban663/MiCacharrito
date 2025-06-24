@@ -13,7 +13,6 @@ export class LoginAdminService {
    return this.httpClient.post('http://localhost:8080/ver/iniciarSesionAdmin', {
      usuario: usuario,
      password: password
- 
    }, { responseType: 'text' });
  
  }

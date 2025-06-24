@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Router} from '@angular/router';
 import { LoginUsuarioService } from '../servicio/login-usuario.service';
 import { CommonModule } from '@angular/common';
-
+import { AuthService } from '../servicio/auth.service';
 
 
 
@@ -19,12 +19,16 @@ export class LoginUsuarioComponent {
   loginForm: FormGroup;
   errorMsg: string = '';
   loginExitoso: boolean = false;
+  mostrarFormulario = true;
+  cargando = false;
+
 
   // Inyecta el identificador de plataforma en el constructor
     constructor(
     private fb: FormBuilder,
-    private authService: LoginUsuarioService, // Asegúrate de que este servicio esté correctamente importado
-    private router: Router
+    private authService: LoginUsuarioService, 
+    private authStateService: AuthService,
+    private router: Router,
   ) {
     this.loginForm = this.fb.group({
       identificacion: ['', Validators.required],
@@ -32,15 +36,21 @@ export class LoginUsuarioComponent {
     });
   }
    
-  mostrarFormulario = true;
 
     // Cuando quieras ocultar el formulario, pon:
   onSubmit() {
     console.log('submit');
     console.log(this.loginForm.value);
-    if (this.loginForm.invalid) return;
+    if (this.loginForm.invalid) {
+      this.errorMsg = 'Por favor completa todos los campos';
+      return;
+    } 
 
     const { identificacion, password } = this.loginForm.value;
+      this.cargando = true;
+      this.errorMsg = '';
+
+    // Llama al servicio de autenticación para hacer login
     this.authService.login(identificacion, password).subscribe({
       next: (resp) => {
         this.loginExitoso = true;
@@ -53,45 +63,20 @@ export class LoginUsuarioComponent {
       
       error: (err) => {
         this.errorMsg = 'Usuario o contraseña incorrectos';
-
          setTimeout(() => {
           this.errorMsg = '';
         }, 3000);
+
+         this.cargando = false;
+        console.error('Error en login:', err);
+
       }
     });
   }
 
-  irAUsuario() {
-  
-}
 
 irAAdministrador() {
   this.router.navigate(['/login-admin']);
   this.mostrarFormulario = false;
 }
-
-
-/*
-abrirLoginUsuario() {
-    const modal = document.getElementById('login');
-    if (modal !== null) {
-      modal.style.display = 'block';
-    }
-  }
-  cerrarLoginUsuario() {
-  const modal = document.getElementById('login');
-  
-  if (modal !== null) {
-    // 1. Eliminar el foco del elemento actualmente enfocado
-    if (document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur();
-    }
-
-    // 2. Ocultar el modal y marcarlo como inaccesible para lectores de pantalla
-    modal.style.display = 'none';
-    modal.setAttribute('aria-hidden', 'true');
-  }
-}
-
-  */
 }

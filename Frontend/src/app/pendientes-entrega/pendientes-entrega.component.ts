@@ -21,7 +21,7 @@ export class PendientesEntregaComponent implements OnInit {
   tipoVehiculoSeleccionado: string = '';
   tiposVehiculos: string[] = ['automovil', 'camioneta', 'campero', 'microbus', 'motocicleta'];
 
-  constructor(private adminService: AdminService) { }
+  constructor(private adminService: AdminService) {}
 
   ngOnInit(): void {
     this.cargarAlquileresPendientes();

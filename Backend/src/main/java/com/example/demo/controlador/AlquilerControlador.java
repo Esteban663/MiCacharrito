@@ -41,45 +41,72 @@ public class AlquilerControlador {
         return repositorioAlquiler.findByUsuarioIdentificacion(identificacion);
     }
     
-    @GetMapping("/AlquileresActivos")
-    public List<Alquiler> verAlquileresActivos(@RequestParam String identificacion) {
-        return repositorioAlquiler.findByUsuarioIdentificacionAndEstado(identificacion, "pendiente de entrega");
-    }
-    
+    // Guardar un nuevo alquiler
     @PostMapping("/GuardarAlquiler")
     public ResponseEntity<?> guardarAlquiler(@RequestBody Alquiler alquiler) {
         try {
-            Alquiler nuevoAlquiler = repositorioAlquiler.save(alquiler);
-            return ResponseEntity.ok(nuevoAlquiler);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error al guardar el alquiler: " + e.getMessage());
-        }
-    }
-    
-    @PostMapping("/CancelarAlquiler")
-    public ResponseEntity<?> cancelarAlquiler(@RequestParam int numeroAlquiler) {
-        try {
-            Optional<Alquiler> alquilerOpt = repositorioAlquiler.findById(numeroAlquiler);
-            
-            if (!alquilerOpt.isPresent()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("Alquiler no encontrado");
+            // Validaciones básicas
+            if (alquiler.getUsuario() == null) {
+                return ResponseEntity.badRequest().body("El usuario es obligatorio");
+            }
+            if (alquiler.getVehiculo() == null) {
+                return ResponseEntity.badRequest().body("El vehículo es obligatorio");
+            }
+            if (alquiler.getFecha_inicio() == null) {
+                return ResponseEntity.badRequest().body("La fecha de inicio es obligatoria");
+            }
+            if (alquiler.getFecha_entrega() == null) {
+                return ResponseEntity.badRequest().body("La fecha de entrega es obligatoria");
             }
             
-            Alquiler alquiler = alquilerOpt.get();
+            // Establecer estado por defecto
+            if (alquiler.getEstado() == null || alquiler.getEstado().trim().isEmpty()) {
+                alquiler.setEstado("pendiente de entrega");
+            }
             
-            // Verificar que el alquiler esté pendiente de entrega
+            Alquiler nuevoAlquiler = repositorioAlquiler.save(alquiler);
+            return ResponseEntity.ok(nuevoAlquiler);
+            
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Error al guardar el alquiler: " + e.getMessage());
+        }
+    }
+
+    
+   
+    // Obtener alquileres activos (pendientes de entrega) de un usuario
+    @GetMapping("AlquileresActivos")
+    public List<Alquiler> obtenerAlquileresActivos(@RequestParam String identificacion) {
+        return repositorioAlquiler.findByUsuarioIdentificacionAndEstado(identificacion, "pendiente de entrega");
+    }
+    
+    
+    
+
+    // Cancelar un alquiler
+    @PostMapping("/CancelarAlquiler")
+    public ResponseEntity<String> cancelarAlquiler(@RequestParam int numeroAlquiler) {
+        try {
+            // Buscar el alquiler
+            Alquiler alquiler = repositorioAlquiler.findByNumeroAlquiler(numeroAlquiler);
+            
+            if (alquiler == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Alquiler no encontrado");
+            }
+            
+            // Verificar que esté pendiente de entrega
             if (!"pendiente de entrega".equals(alquiler.getEstado())) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body("Solo se pueden cancelar alquileres pendientes de entrega");
+                    .body("Solo se pueden cancelar alquileres pendientes de entrega");
             }
             
             // Actualizar estado del alquiler a cancelado
             alquiler.setEstado("cancelado");
             repositorioAlquiler.save(alquiler);
             
-            // Cambiar estado del vehículo a disponible
+            // Actualizar estado del vehículo a disponible
             Vehiculo vehiculo = alquiler.getVehiculo();
             if (vehiculo != null) {
                 vehiculo.setEstado("disponible");
@@ -90,9 +117,11 @@ public class AlquilerControlador {
             
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error al cancelar el alquiler: " + e.getMessage());
+                .body("Error al cancelar el alquiler: " + e.getMessage());
         }
     }
+    
+ 
     
     @GetMapping("/BuscarAlquiler")
     public ResponseEntity<?> buscarAlquiler(@RequestParam int numeroAlquiler) {
@@ -105,12 +134,13 @@ public class AlquilerControlador {
                     .body("Alquiler no encontrado");
         }
     }
-    
+
     @GetMapping("/AlquileresPendientesEntrega")
     public List<Alquiler> verAlquileresPendientesEntrega() {
         return repositorioAlquiler.findByEstado("pendiente de entrega");
     }
 
+<<<<<<< HEAD
     @GetMapping("/AlquileresPendientesEntregaPorTipo")
     public List<Alquiler> verAlquileresPendientesEntregaPorTipo(@RequestParam String tipoVehiculo) {
         return repositorioAlquiler.findByEstadoAndVehiculoTipo("pendiente de entrega", tipoVehiculo);
@@ -122,5 +152,7 @@ public class AlquilerControlador {
     	return repositorioAlquiler.findByVehiculoPlaca(placa);
     }
     
+=======
+>>>>>>> rama-Mateo
    
 }

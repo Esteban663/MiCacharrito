@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Vehiculo } from '../entities/vehiculo';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-lista-vehiculos',
@@ -28,7 +30,13 @@ export class ListaVehiculosComponent {
     this.verVehiculos();
    
   }
-  constructor(private vehiculoService: VehiculoService) {
+ 
+     constructor(
+    private vehiculoService: VehiculoService,
+    private router: Router // Inyección del Router
+  ) {
+      this.vehiculo = [];
+
     }
     
     verVehiculos() {
@@ -60,36 +68,6 @@ export class ListaVehiculosComponent {
       }
     });
   }
-/*
-verVehiculos() {
-  this.vehiculoService.obtenerListaVehiculos().subscribe(
-    (dato: Vehiculo[]) => {
-      this.vehiculo = dato.filter(v => v.estado === 'Disponible');
-      this.vehiculosFiltrados = [...this.vehiculo]; // Mostrar todos al inicio
-
-    }
-  );
-}
-
-  cargarVehiculosPorTipoDisponibles() {
-    this.cargando = true;
-    this.vehiculoService.obtenerVehiculoPorTipo(this.tipoVehiculoSeleccionado).subscribe({ 
-      next: (vehiculos) => {
-        this.vehiculo = vehiculos.filter(v => v.estado === 'Disponible');
-        this.cargando = false;
-        if (vehiculos.length === 0) {
-          this.mostrarMensaje('No hay vehículos disponibles de este tipo', 'info');
-        }
-      },
-      error: (error) => {
-        console.error('Error al cargar vehículos por tipo:', error);
-        this.mostrarMensaje('Error al cargar los vehículos por tipo', 'error');
-        this.cargando = false;
-      }
-    });
-
-}
-    */
     
  filtarPorTipo(): void {
     if (!this.tipoVehiculoSeleccionado) {
@@ -114,6 +92,9 @@ verVehiculos() {
     this.tipoMensaje = tipo;
 
     }
-}
 
+    irACancelarAlquiler() {
+      this.router.navigate(['/cancelar-alquiler']);
+}
+}
 

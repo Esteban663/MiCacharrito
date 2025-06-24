@@ -34,9 +34,7 @@ RegistrarDevolucion(datos: { numeroAlquiler: number, fechaReal: string, cobroAdi
 // Busca un alquiler por su número de alquiler
 BuscarAlquilerPorId(numeroAlquiler: number): Observable<Alquiler> {
   return this.http.get<Alquiler>(`${this.apiUrl}/BuscarAlquiler?numeroAlquiler=${numeroAlquiler}`);
+}   
 }
 
 
-
-    
-}
