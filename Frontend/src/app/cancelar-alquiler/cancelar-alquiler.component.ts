@@ -158,7 +158,7 @@ export class CancelarAlquilerComponent implements OnInit {
 
   // Método para volver al dashboard o página anterior
   volverAlDashboard(): void {
-    this.router.navigate(['/usuario']); // Ajusta la ruta según tu aplicación
+    this.router.navigate(['/lista-vehiculos']); // Ajusta la ruta según tu aplicación
   }
 
   // Método para cerrar sesión

@@ -140,19 +140,12 @@ public class AlquilerControlador {
         return repositorioAlquiler.findByEstado("pendiente de entrega");
     }
 
-<<<<<<< HEAD
-    @GetMapping("/AlquileresPendientesEntregaPorTipo")
-    public List<Alquiler> verAlquileresPendientesEntregaPorTipo(@RequestParam String tipoVehiculo) {
-        return repositorioAlquiler.findByEstadoAndVehiculoTipo("pendiente de entrega", tipoVehiculo);
-    }
-    
-    
+
+   
     @GetMapping("/BuscarAlquilerPorVehiculo")
     public List<Alquiler> verBuscarAlquilerVehiculo(@RequestParam String placa){
     	return repositorioAlquiler.findByVehiculoPlaca(placa);
     }
     
-=======
->>>>>>> rama-Mateo
    
 }

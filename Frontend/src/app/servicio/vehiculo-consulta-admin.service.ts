@@ -18,10 +18,10 @@ export class VehiculoConsultaAdminService {
   constructor(private http: HttpClient) { }
 
   // Método para buscar vehículos por tipo
-  buscarVehiculosPorTipo(tipo: string): Observable<Vehiculo[]> {
-    const params = new HttpParams().set('tipo', tipo);
-    return this.http.post<Vehiculo[]>(`${this.baseUrl}/BuscarVehiculoPorTipo`, null, { params });
-  }
+ buscarVehiculosPorTipo(tipo: string): Observable<Vehiculo[]> {
+  const params = new HttpParams().set('tipo', tipo);
+  return this.http.get<Vehiculo[]>(`${this.baseUrl}/BuscarVehiculoPorTipo`, { params });
+}
 
   // Método para obtener todos los vehículos (opcional)
   obtenerTodosLosVehiculos(): Observable<Vehiculo[]> {

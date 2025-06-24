@@ -138,6 +138,14 @@
         </div>
       </div>
 
+         <!-- Botón agregado para cancelar alquiler -->
+<div class="mb-3">
+    <button class="btn btn-iniciar" (click)="irAConsultarVehiculo()">
+        <i class="fas fa-times-circle"></i>
+        Consultar Vehículos Disponibles
+    </button>
+</div>
+
   <!-- Mensaje cuando no hay alquileres -->
   <div *ngIf="!cargando && alquileresPendientes.length === 0 && !mensaje" 
        class="text-center my-5">

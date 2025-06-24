@@ -3,6 +3,8 @@ import { Alquiler } from '../servicio/alquiler.service';
 import { AdminService } from '../servicio/admin.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Vehiculo } from '../entities/vehiculo';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-control',
@@ -19,7 +21,7 @@ export class AdminControlComponent {
 
   // Para el filtro
   tipoVehiculoSeleccionado: string = '';
-  tiposVehiculos: string[] = ['automovil', 'camioneta', 'campero', 'microbus', 'motocicleta'];
+  tiposVehiculos: string[] = ['Automovil', 'Camioneta', 'Campero', 'Microbus', 'Motocicleta'];
 
   //Para Recibir Vehiculo
   busquedaAlquiler: string = '';
@@ -29,7 +31,10 @@ export class AdminControlComponent {
   mensajeC: string = '';
   exito: boolean = false;
 
-  constructor(private adminService: AdminService) { }
+ 
+
+
+  constructor(private adminService: AdminService, private router: Router) { }
 
   ngOnInit(): void {
     this.cargarAlquileresPendientes();
@@ -180,4 +185,8 @@ consultarAlquiler() {
   });
 }
 
+irAConsultarVehiculo() {
+  this.router.navigate(['/consultar-vehiculo-admin']);
+
+}
 }

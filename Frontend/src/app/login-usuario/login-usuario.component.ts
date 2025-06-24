@@ -79,4 +79,7 @@ irAAdministrador() {
   this.router.navigate(['/login-admin']);
   this.mostrarFormulario = false;
 }
+
+irAUsuario() {
+}
 }

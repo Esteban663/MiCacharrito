@@ -13,7 +13,7 @@ import { ConsultarVehiculoAdminComponent } from "./consultar-vehiculo-admin/cons
   selector: 'app-root',
   standalone: true,
 
-  imports: [RouterOutlet, NavegacionComponent, LoginUsuarioComponent,AdminControlComponent, CancelarAlquilerComponent, PendientesEntregaComponent, ConsultarVehiculoAdminComponent],
+  imports: [RouterOutlet, LoginUsuarioComponent,AdminControlComponent, CancelarAlquilerComponent, PendientesEntregaComponent, ConsultarVehiculoAdminComponent],
 
 
   templateUrl: './app.component.html',

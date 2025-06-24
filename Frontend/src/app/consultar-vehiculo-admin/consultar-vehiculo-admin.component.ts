@@ -18,11 +18,11 @@ export class ConsultarVehiculoAdminComponent {
   
   // Tipos de vehículos según los requerimientos
   tiposVehiculos: string[] = [
-    'automovil',
-    'camioneta', 
-    'campero',
-    'microbus',
-    'motocicleta'
+    'Automovil',
+    'Camioneta', 
+    'Campero',
+    'Microbus',
+    'Motocicleta'
   ];
 
   constructor(private vehiculoService: VehiculoConsultaAdminService) { }

@@ -13,7 +13,7 @@ export const routes: Routes = [
     {path: 'login-usuario', component: LoginUsuarioComponent},
     {path: 'usuario', component: UsuarioComponent},
     {path: 'pendientes-entrega',component: PendientesEntregaComponent},
-    { path: 'admin/consultar-vehiculos', component: ConsultarVehiculoAdminComponent },
+    { path: 'consultar-vehiculo-admin', component: ConsultarVehiculoAdminComponent },
     {path: 'login-admin', component: LoginAdminComponent },
     {path: 'admin-control', component: AdminControlComponent },
     {path: 'pendientes-entrega',component: PendientesEntregaComponent},

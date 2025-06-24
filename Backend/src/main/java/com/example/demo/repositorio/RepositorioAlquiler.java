@@ -14,6 +14,7 @@ public interface RepositorioAlquiler extends JpaRepository<Alquiler, Integer> {
     @Query("SELECT a FROM Alquiler a WHERE a.usuario.identificacion = :identificacion")
     List<Alquiler> findByUsuarioIdentificacion(@Param("identificacion") String identificacion);
     
+    
     // Buscar alquileres activos (por estado) de un usuario específico
     @Query("SELECT a FROM Alquiler a WHERE a.usuario.identificacion = :identificacion AND a.estado = :estado")
     List<Alquiler> findByUsuarioIdentificacionAndEstado(@Param("identificacion") String identificacion, @Param("estado") String estado);
@@ -29,4 +30,8 @@ public interface RepositorioAlquiler extends JpaRepository<Alquiler, Integer> {
     // Buscar alquileres por placa del vehículo
     @Query("SELECT a FROM Alquiler a WHERE a.vehiculo.placa = :placa")
     List<Alquiler> findByVehiculoPlaca(@Param("placa") String placa);
+    
+    @Query("SELECT a FROM Alquiler a WHERE a.estado = :estado AND a.vehiculo.tipo = :tipo")
+    List<Alquiler> findByEstadoAndVehiculoTipo(@Param("estado") String estado, @Param("tipo") String tipo);
+
 }
